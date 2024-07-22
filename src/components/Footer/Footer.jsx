@@ -42,7 +42,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className='flex flex-col md:flex-row md:justify-between items-center'>
+        <div className='flex flex-col text-center md:flex-row md:justify-between items-center'>
           <p className='text-md mb-4 md:mb-0'>
             © Asakabank Aksiyadorlik Jamiyati 2024. Barcha huquqlar himoyalangan
           </p>
