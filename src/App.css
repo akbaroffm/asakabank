@@ -124,3 +124,8 @@ img{
 .animation-footer:hover::after {
   width: 100%;
 }
+
+.footer-social{
+  width: 20px !important;
+  height: 20px !important;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa'; // Make sure to install react-icons
+import { FaSearch } from 'react-icons/fa';
 
 const SearchComponent = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,7 +16,7 @@ const SearchComponent = () => {
       direction: 'To’liq stavka',
       filial: '"Asaka Bank" AJ bosh ofisi',
       description: "Veb-ilovalarni ishlab chiqish va qo'llab-quvvatlash, veb-ilovalarda ishlatiladigan ma'lumotlarni saqlash va qayta ishlash uchun ma'lumotlar bazalari bilan ishlash. Ishlashni optimallashtirish, sinovdan o'tkazish va tuzatishni amalga oshirish",
-      date: '2024.02.13',
+      date: '2024.08.19',
     },
     {
       title: 'XTT bo’limining bosh mutaxassisi (xalqaro to’lov tizimlari)',
@@ -30,7 +30,7 @@ const SearchComponent = () => {
       direction: 'To’liq stavka',
       filial: '"Asaka Bank" AJ bosh ofisi',
       description: "Testlovchi - komponent yoki tizimni sinovdan o'tkazishda ishtirok etadigan mutaxassis. Uning mas'uliyati sinov ob'ektining ishlashida mumkin bo'lgan xatolar va nosozliklarni qidirishdir.",
-      date: '2024.02.13',
+      date: '2024.05.21',
     },
   ];
 
