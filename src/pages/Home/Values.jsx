@@ -54,7 +54,8 @@ function Values() {
   };
 
   return (
-    <div>
+    // scroll yoqotish uchun qo'yildi
+    <div className="overflow-hidden">
       <div className="my-[40px] px-1">
         <div className="px-2">
           <h2 className="md:text-[36px] text-[24px] font-[700]">

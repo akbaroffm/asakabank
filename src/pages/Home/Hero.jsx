@@ -20,7 +20,7 @@ function Hero() {
             <h1 className="text-[20px] md:text-[25px] font-bold mb-4 animate-fade-in mt-4 md:mt-0">
               To'gri tanlov - muvaffaqiyatli natija
             </h1>
-            <button className="md:mt-[32px] px-[35px] py-3 bg-red-500 text-white text-[17px] font-[500] rounded-lg hover:bg-red-600 transition-colors">
+            <button className="md:mt-[32px] px-[25px] py-2 md:px-[35px] md:py-3 bg-red-500 text-white text-[17px] font-[500] rounded-lg hover:bg-red-600 transition-colors">
               Jamoa a'zosi bo'lish
             </button>
           </div>

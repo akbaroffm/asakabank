@@ -87,7 +87,7 @@ function Vacancies() {
         </div>
       </div>
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row md:space-x-6 pt-12 pb-12">
+        <div className="flex flex-col md:flex-row md:space-x-6 pt-12 pb-12 px-4">
           <div className="mb-8 md:mb-0 md:w-3/7">
             <Filter
               filter={filter}
