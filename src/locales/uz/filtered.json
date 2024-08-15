@@ -1,0 +1,14 @@
+{
+  "all": "Barchasi",
+  "filter": "Filter",
+  "clearFilters": "Filtrlarni tozalash",
+  "direction": "Yo'nalish",
+  "branch": "Filial",
+  "jobType": "Ish turi",
+  "loading": "Yuklanmoqda...",
+  "full_time": "To'liq stavka",
+  "part_time": "Yarim stavka",
+  "contract": "Shartnoma asosida",
+  "temporary": "Vaqtinchalik",
+  "internship": "Stajirovka"
+}
