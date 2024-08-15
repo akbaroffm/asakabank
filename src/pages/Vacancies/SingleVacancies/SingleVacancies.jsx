@@ -169,7 +169,7 @@ const SingleVacancy = () => {
   };
 
   return (
-    <div>
+    <div className="px-[4">
       <ToastContainer position="top-right" />
       <div
         className="heroBg px-3"
@@ -177,12 +177,12 @@ const SingleVacancy = () => {
           background: `url(${HeroImg}) center center / cover no-repeat rgb(230, 230, 230)`,
         }}
       >
-        <div className="container mx-auto md:pb-[80px] md:pt-[112px] text-left md:text-left pt-[60px] pb-[40px]">
-          <div className="max-w-[700px]">
-            <h1 className="font-[700] leading-[150%] mb-[24px] text-[36px]">
+        <div className="container mx-auto ">
+          <div className="max-w-[700px] md:pb-[80px] md:pt-[112px] text-left md:text-left py-[60px]">
+            <h1 className="font-[700] leading-[150%] mb-[24px] text-[24px] md:text-[36px]">
               {vacancy.title}
             </h1>
-            <p className="font-[500] leading-[150%] text-[18px]">
+            <p className="font-[500] leading-[150%] text-[16px] md:text-[18px]">
               {vacancy.description}
             </p>
           </div>
@@ -190,7 +190,7 @@ const SingleVacancy = () => {
       </div>
       <div className="container mx-auto p-4">
         <div className="pt-[60px]">
-          <div className="bg-white border border-gray-300 rounded-[24px] p-[32px]">
+          <div className="bg-white md:border md:border-gray-300 rounded-[24px] px-[12px] md:p-[32px]">
             <div className="">
               <div>
                 <div className="mb-[16px]">
@@ -198,7 +198,7 @@ const SingleVacancy = () => {
                     {t('about-work')}
                   </span>
                 </div>
-                <h2 className="font-[700] text-[24px] leading-[150%]">
+                <h2 className="font-[700] text-[22px] md:text-[24px] leading-[150%]">
                   {vacancy.title}
                 </h2>
                 <div className="flex flex-wrap gap-2 my-[18px]">
@@ -227,7 +227,7 @@ const SingleVacancy = () => {
                   </button>
                 </div>
               </div>
-              <div className="border-t mt-[32px] pt-[32px] border-[#CCCCCC]">
+              <div className="md:border-t md:mt-[32px] pt-[24px] md:pt-[32px] md:border-[#CCCCCC]">
                 <strong className="font-[700] text-[20px]">{t('tasks')}</strong>
                 <div
                   className="mt-[16px] vacancy-item text-[18px]"
@@ -236,23 +236,23 @@ const SingleVacancy = () => {
                   )}
                 />
               </div>
-              <div className="border-t mt-[32px] pt-[32px] border-[#CCCCCC]">
+              <div className="md:border-t mt-[16px] md:mt-[32px] md:pt-[32px] border-[#CCCCCC]">
                 <strong className="font-[700] text-[20px]">
                   {t('demand')}
                 </strong>
                 <div
-                  className="vacancy-item"
+                  className="vacancy-item mt-[16px]"
                   dangerouslySetInnerHTML={createMarkup(
                     vacancy.requirements[0]?.description
                   )}
                 />
               </div>
-              <div className="border-t mt-[32px] pt-[32px] border-[#CCCCCC]">
+              <div className="md:border-t mt-[16px] md:mt-[32px] md:pt-[32px] border-[#CCCCCC]">
                 <strong className="font-[700] text-[20px]">
                   {t('conditions')}
                 </strong>
                 <div
-                  className="vacancy-item"
+                  className="vacancy-item mt-[16px]"
                   dangerouslySetInnerHTML={createMarkup(
                     vacancy.conditions[0]?.description
                   )}
@@ -261,7 +261,7 @@ const SingleVacancy = () => {
             </div>
           </div>
         </div>
-        <div className="py-[60px]">
+        <div className="py-[60px] md:max-w-[816px] w-full px-4">
           <h2 className="text-[24px] mb-[60px] font-[700] ">
             {t('similar-vacancy')}
           </h2>
