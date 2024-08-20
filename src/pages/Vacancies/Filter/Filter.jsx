@@ -223,7 +223,7 @@ const Filter = ({ onFilter, filter, setFilter, defaultFilter }) => {
 
       <button
         onClick={() => onFilter(filter)}
-        className="w-full bg-red-500 text-white py-2 px-4 rounded-lg mt-4 font-semibold hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+        className="w-full bg-red-500 text-white py-3 px-4 rounded-lg  mt-4 font-[500] hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
       >
         {t('filter')}
       </button>

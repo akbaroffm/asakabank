@@ -11,12 +11,14 @@ import SingleVacancy from './pages/Vacancies/SingleVacancies/SingleVacancies';
 import './components/i18n';
 import { useState } from 'react';
 import Home from './pages/Home/Home';
+import BlogDetail from './pages/Home/BlogDetail';
 
 function App() {
   const [language, setLanguage] = useState('uz'); // Default language
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="md:py-[12px]">
+    <div className="flex flex-col min-h-screen bg-[#F8F8F8]">
+      {/* // md:py-[12px] */}
+      <div className="">
         <Navbar />
       </div>
       <main className="flex-grow">
@@ -30,6 +32,7 @@ function App() {
           <Route path="/digital" element={<Digital />} />
           <Route path="/career" element={<Career />} />
           <Route path="/blogs" element={<Blog />} />
+          <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/about" element={<AboutBank />} />
         </Routes>
       </main>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import api from '../../services/api';
 import Others from '../../assets/images/other-directions.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,6 +9,7 @@ import { Autoplay } from 'swiper/modules';
 
 function DirectionSection() {
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchCategoriesData = async () => {
@@ -24,6 +26,12 @@ function DirectionSection() {
 
     fetchCategoriesData();
   }, []);
+
+  const handleCategoryClick = (category) => {
+    if (category.is_recommended) {
+      navigate(`/vacancies?category=${category.id}`);
+    }
+  };
 
   return (
     <div className="mb-[80px] px-4">
@@ -59,7 +67,8 @@ function DirectionSection() {
         {categories.slice(0, 3).map((category) => (
           <SwiperSlide
             key={category?.id}
-            className="flex flex-col items-center space-y-10 pt-[15px] px-[10px] w-[380px] h-[450px] rounded-[20px] bg-[#efefef]"
+            onClick={() => handleCategoryClick(category)}
+            className="cursor-pointer flex flex-col items-center space-y-10 pt-[15px] px-[10px] w-[380px] h-[450px] rounded-[20px] bg-[#efefef]"
           >
             <h4 className="text-[18px] font-[500] leading-[160%] text-center">
               {category?.name}

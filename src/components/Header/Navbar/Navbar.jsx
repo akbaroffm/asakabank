@@ -18,8 +18,8 @@ const Navbar = ({ onLanguageChange }) => {
   };
 
   return (
-    <div>
-      <div className="container mx-auto p-4 relative">
+    <div className="bg-white p-2">
+      <div className="container mx-auto p-4 relative ">
         <div className="flex items-center justify-between p-2">
           <div className="relative z-20">
             <Link className="inline-block" to={'/'}>
@@ -31,7 +31,7 @@ const Navbar = ({ onLanguageChange }) => {
             </Link>
           </div>
 
-          <div className="md:hidden flex items-center space-x-4 absolute right-0 top-1 p-2 z-30">
+          <div className="md:hidden flex items-center space-x-4 absolute right-0 top-1 p-2 z-30 ">
             <div className="flex space-x-2">
               <button
                 onClick={() => handleLanguageChange('ru')}
@@ -56,7 +56,7 @@ const Navbar = ({ onLanguageChange }) => {
 
           <div className="flex space-x-10">
             <ul
-              className={`flex-col md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static bg-white w-full md:w-auto transition-all duration-300 ease-in-out z-10 ${
+              className={`flex-col md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static w-full md:w-auto transition-all duration-300 ease-in-out z-10 ${
                 isOpen
                   ? 'top-16 left-0 opacity-100'
                   : 'top-[-490px] left-0 opacity-0 md:opacity-100'

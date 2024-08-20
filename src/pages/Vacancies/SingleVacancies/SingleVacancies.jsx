@@ -63,10 +63,12 @@ const SingleVacancy = () => {
 
   const handleModalOpen = () => {
     setIsModalVisible(true);
+    document.body.style.overflow = 'hidden';
   };
 
   const handleModalClose = () => {
     setIsModalVisible(false);
+    document.body.style.overflow = '';
   };
 
   const handleChange = (event) => {
@@ -169,7 +171,7 @@ const SingleVacancy = () => {
   };
 
   return (
-    <div className="px-[4">
+    <div className="px-[4] md:overflow-hidden overflow-hidden">
       <ToastContainer position="top-right" />
       <div
         className="heroBg px-3"
@@ -297,8 +299,8 @@ const SingleVacancy = () => {
         </div>
       </div>
       {isModalVisible && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 overflow-auto pt-[50px] pb-[40px]">
-          <div className="bg-white py-[30px] px-[24px] rounded-[24px] w-full max-w-[780px]">
+        <div className=" h-auto fixed inset-0 bg-gray-300 bg-opacity-50 flex md:flex md:justify-center md:items-center z-50 overflow-auto md:pt-[50px] p-4 md:pb-[40px]">
+          <div className="bg-white py-[30px] px-[24px] rounded-[24px] w-full max-w-[780px] modal-content">
             <div className="flex justify-between items-start">
               <h2 className="text-[22px] font-[700] mb-[20px] inline-block">
                 Ariza berish

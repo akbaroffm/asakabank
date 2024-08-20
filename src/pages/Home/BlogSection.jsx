@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 
 function BlogSection() {
   const [blogs, setBlogs] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBlogsData = async () => {
@@ -11,12 +13,19 @@ function BlogSection() {
         const results = response?.data?.results;
         const blogs = Array.isArray(results) ? results : [];
         setBlogs(blogs);
+        console.log(blogs);
       } catch {
         console.error('Error fetching blogs data');
       }
     };
     fetchBlogsData();
   }, []);
+
+  const handleBlogClick = (id) => {
+    navigate(`/blogs/${id}`);
+  };
+
+  const createMarkup = (html) => ({ __html: html });
 
   return (
     <div className="md:pt-[40px] pb-[80px]">
@@ -28,7 +37,8 @@ function BlogSection() {
           {blogs.slice(0, 6).map((blog) => (
             <div
               key={blog.id}
-              className="bg-white rounded-[20px] p-[18px] overflow-hidden flex flex-col justify-between h-full shadow-custom-light"
+              className="bg-white rounded-[20px] p-[18px] overflow-hidden flex flex-col justify-between h-full shadow-custom-light cursor-pointer"
+              onClick={() => handleBlogClick(blog.id)}
             >
               <img
                 src={blog.image.url}
@@ -37,9 +47,10 @@ function BlogSection() {
               />
               <div className="flex-1 mt-4">
                 <h4 className="font-bold text-[17px]">{blog.title}</h4>
-                <p className="text-[#555] mt-2 text-[15px] font-[500] leading-[150%]">
-                  {blog.short_description}
-                </p>
+                <p
+                  className="text-[#555] mt-2 text-[15px] font-[500] leading-[150%]"
+                  dangerouslySetInnerHTML={createMarkup(blog.short_description)}
+                />
               </div>
               <div className="flex justify-between items-center mt-4">
                 <span className="flex items-center text-red-500 font-semibold cursor-pointer">

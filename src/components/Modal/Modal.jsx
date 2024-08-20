@@ -1,130 +1,198 @@
 import React, { useState } from 'react';
-import { ExclamationCircleFilled } from '@ant-design/icons';
-import {
-  Button,
-  Modal,
-  Space,
-  Form,
-  Input,
-  Upload,
-  Checkbox,
-  message,
-} from 'antd';
-import axios from 'axios';
+import ClearIcon from '@mui/icons-material/Clear';
+import api from '../../services/api';
+import { toast } from 'react-hot-toast';
 
-const { confirm } = Modal;
+const Modal = ({ isVisible, onClose }) => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    middleName: '',
+    phone: '',
+    email: '',
+    cv: null,
+    agreement: false,
+    vacancy: null,
+  });
+  const [submitting, setSubmitting] = useState(false);
 
-const App = () => {
-  const [form] = Form.useForm();
+  if (isVisible) {
+    document.body.classList.add('no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
+  }
 
-  const showPromiseConfirm = () => {
-    confirm({
-      title: 'Apply for the Vacancy',
-      icon: <ExclamationCircleFilled />,
-      content: (
-        <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: 'Please input your name!' }]}
-          >
-            <Input placeholder="Name" />
-          </Form.Item>
-          <Form.Item
-            name="surname"
-            label="Surname"
-            rules={[{ required: true, message: 'Please input your surname!' }]}
-          >
-            <Input placeholder="Surname" />
-          </Form.Item>
-          <Form.Item name="middleName" label="Middle Name">
-            <Input placeholder="Middle Name" />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[
-              {
-                required: true,
-                type: 'email',
-                message: 'Please input a valid email!',
-              },
-            ]}
-          >
-            <Input placeholder="Email" />
-          </Form.Item>
-          <Form.Item
-            name="phone"
-            label="Phone"
-            rules={[
-              { required: true, message: 'Please input your phone number!' },
-            ]}
-          >
-            <Input placeholder="Phone" />
-          </Form.Item>
-          <Form.Item
-            name="cv"
-            label="Upload CV"
-            rules={[{ required: true, message: 'Please upload your CV!' }]}
-          >
-            <Upload
-              beforeUpload={() => false} // Disable automatic upload
-              accept=".pdf,.doc,.docx"
-              showUploadList={false}
-            >
-              <Button>Click to Upload</Button>
-            </Upload>
-          </Form.Item>
-          <Form.Item
-            name="agreement"
-            valuePropName="checked"
-            rules={[
-              {
-                required: true,
-                message: 'You must agree to the data processing!',
-              },
-            ]}
-          >
-            <Checkbox>I agree to the processing of my data.</Checkbox>
-          </Form.Item>
-        </Form>
-      ),
-      onOk() {
-        form.submit();
-      },
-      onCancel() {},
+  if (!isVisible) return null;
+
+  const handleChange = (event) => {
+    const { name, value, type, checked, files } = event.target;
+    setFormData({
+      ...formData,
+      [name]:
+        type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
     });
   };
 
-  const handleSubmit = async (values) => {
+  const handleFileSelect = () => {
+    document.getElementById('cv-upload').click();
+  };
+
+  const handleModalSubmit = async (event) => {
+    event.preventDefault();
+    if (!formData.agreement) {
+      toast.error(
+        "Iltimos, shaxsiy ma'lumotlarni qayta ishlashga rozilik bildiring."
+      );
+      return;
+    }
+    setSubmitting(true);
+
     try {
-      const formData = new FormData();
-      Object.keys(values).forEach((key) => {
-        if (key === 'cv') {
-          formData.append(key, values[key].file.originFileObj);
-        } else {
-          formData.append(key, values[key]);
-        }
+      const cvFormData = new FormData();
+      cvFormData.append('file', formData.cv);
+
+      const cvResponse = await api({
+        url: '/upload/',
+        method: 'POST',
+        data: cvFormData,
       });
 
-      await axios.post('https://career-api.asakabank.uz/upload/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const cvId = cvResponse.data.id;
+
+      const applicationData = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        father_name: formData.middleName,
+        phone: formData.phone,
+        email: formData.email,
+        cv: cvId,
+        agreement: formData.agreement,
+        vacancy: formData.vacancy,
+      };
+
+      await api({
+        url: '/apply/job/',
+        method: 'POST',
+        data: applicationData,
       });
 
-      message.success('Your application has been submitted successfully!');
+      toast.success('Ariza muvaffaqiyatli yuborildi!');
+      onClose();
+      setFormData({
+        firstName: '',
+        lastName: '',
+        middleName: '',
+        phone: '',
+        email: '',
+        cv: null,
+        agreement: false,
+        vacancy: null,
+      });
     } catch (error) {
-      message.error('Failed to submit the application.');
-      console.error('Submission error:', error);
+      toast.error('Ariza yuborishda xato yuz berdi.');
+      console.error('Submission failed:', error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <Space wrap>
-      <Button onClick={showPromiseConfirm}>Apply for Vacancy</Button>
-    </Space>
+    <div className="h-auto fixed inset-0 bg-gray-300 bg-opacity-50 flex md:flex md:justify-center md:items-center z-50 overflow-auto p-4">
+      <div className="bg-white py-[30px] px-[24px] rounded-[24px] w-full max-w-[780px]">
+        <div className="flex justify-between items-start mb-[20px]">
+          <h2 className="text-[22px] font-[700]">Ariza berish</h2>
+          <button className="bg-gray-200 rounded-[50%] p-2" onClick={onClose}>
+            <ClearIcon />
+          </button>
+        </div>
+        <form onSubmit={handleModalSubmit} className="flex flex-wrap gap-x-4">
+          {['firstName', 'lastName', 'middleName', 'phone', 'email'].map(
+            (field) => (
+              <div
+                className="flex flex-col w-full sm:w-[calc(50%-8px)] pt-[24px]"
+                key={field}
+              >
+                <label className="block text-[15px] font-[500] text-[#A3A3A3]">
+                  {field === 'firstName' && 'Ism *'}
+                  {field === 'lastName' && 'Familiya *'}
+                  {field === 'middleName' && 'Otasining ismi *'}
+                  {field === 'phone' && 'Telefon raqam *'}
+                  {field === 'email' && 'Email *'}
+                </label>
+                <input
+                  autoComplete="off"
+                  type={
+                    field === 'phone'
+                      ? 'tel'
+                      : field === 'email'
+                      ? 'email'
+                      : 'text'
+                  }
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="font-[500] text-[17px] mt-1 block w-full border rounded-[12px] px-3 py-3 outline-none bg-[#FAFAFA] focus:border-red-500"
+                  required
+                />
+              </div>
+            )
+          )}
+          <div className="flex flex-col w-full pt-[24px]">
+            <button
+              type="button"
+              onClick={handleFileSelect}
+              className="font-[500] text-[17px] mt-1 block w-full border-dashed border-2 border-black rounded-[12px] px-3 py-3 outline-none bg-[#FAFAFA] text-gray-800"
+            >
+              {formData.cv ? formData.cv.name : 'Rezyume / CV yuklang'}
+            </button>
+            <input
+              id="cv-upload"
+              type="file"
+              name="cv"
+              onChange={handleChange}
+              className="hidden"
+              required
+            />
+          </div>
+          <div className="flex flex-col w-full pt-[24px]">
+            <label className="flex items-center text-[16px] font-[500]">
+              <input
+                type="checkbox"
+                name="agreement"
+                checked={formData.agreement}
+                onChange={handleChange}
+                className="hidden-checkbox"
+                required
+              />
+              <div className="custom-checkbox-container">
+                <div
+                  className={`custom-checkbox ${
+                    formData.agreement ? 'checked' : ''
+                  }`}
+                />
+                <span className="ml-2">
+                  Men shaxsiy ma'lumotlarni qayta ishlashga roziman
+                </span>
+              </div>
+            </label>
+          </div>
+          <div className="flex justify-end w-full pt-[24px]">
+            <button
+              type="submit"
+              className={`bg-red-500 rounded-[12px] text-white font-[500] text-[17px] px-[36px] py-[14px] ${
+                formData.agreement
+                  ? 'cursor-pointer'
+                  : 'cursor-not-allowed opacity-50'
+              }`}
+              disabled={submitting || !formData.agreement}
+            >
+              {submitting ? 'Yuborilyapti...' : 'Ariza berish'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
-export default App;
+export default Modal;

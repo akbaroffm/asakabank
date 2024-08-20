@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Interview from '../../assets/images/interview.png';
 import Customer from '../../assets/images/customer.png';
 import Security from '../../assets/images/security.png';
 import JobOffer from '../../assets/images/job-offer.png';
+import Modal from '../../components/Modal/Modal';
 
 function ProcessSection() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+  };
   return (
     <div className="pb-[60px] px-4">
       <div className="container mx-auto">
@@ -69,11 +79,15 @@ function ProcessSection() {
           </div>
         </div>
         <div className="flex justify-center">
-          <button className="rounded-[12px] bg-red-500 flex justify-center font-[500] text-[17px] md:px-[30px] px-[30px] py-[15px] md:py-[15px] text-white">
+          <button
+            onClick={handleModalOpen}
+            className="rounded-[12px] bg-red-500 flex justify-center font-[500] text-[17px] md:px-[30px] px-[30px] py-[15px] md:py-[15px] text-white"
+          >
             Rezyume qoldirish
           </button>
         </div>
       </div>
+      <Modal isVisible={isModalVisible} onClose={handleModalClose} />
     </div>
   );
 }

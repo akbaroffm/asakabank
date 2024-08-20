@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import animation from '../../assets/images/animationHero.mp4';
+import Modal from '../../components/Modal/Modal';
 
 function Hero() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+  };
+
+  // useEffect(() => {
+  //   // Disable body scroll when the modal is open
+  //   document.body.style.overflow = isModalVisible ? 'hidden' : 'auto';
+  //   return () => {
+  //     document.body.style.overflow = 'auto';
+  //   };
+  // }, [isModalVisible]);
+
   return (
     <div>
       <div className="relative md:h-screen overflow-hidden md:py-[50px]">
@@ -20,12 +39,16 @@ function Hero() {
             <h1 className="text-[20px] md:text-[25px] font-bold mb-4 animate-fade-in mt-4 md:mt-0">
               To'gri tanlov - muvaffaqiyatli natija
             </h1>
-            <button className="md:mt-[32px] px-[25px] py-2 md:px-[35px] md:py-3 bg-red-500 text-white text-[17px] font-[500] rounded-lg hover:bg-red-600 transition-colors">
+            <button
+              onClick={handleModalOpen}
+              className="md:mt-[32px] px-[25px] py-2 md:px-[35px] md:py-3 bg-red-500 text-white text-[17px] font-[500] rounded-lg hover:bg-red-600 transition-colors"
+            >
               Jamoa a'zosi bo'lish
             </button>
           </div>
         </div>
       </div>
+      <Modal isVisible={isModalVisible} onClose={handleModalClose} />
     </div>
   );
 }

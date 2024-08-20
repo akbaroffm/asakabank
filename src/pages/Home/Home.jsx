@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Values from './Values';
 import Hero from './Hero';
 import DirectionSection from './DirectionSection';
@@ -8,6 +8,7 @@ import BlogSection from './BlogSection';
 import FeedbackSection from './FeedbackSection';
 
 function Home() {
+  const [filter, setFilter] = useState({});
   return (
     <>
       <div>

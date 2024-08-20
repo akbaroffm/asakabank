@@ -1,0 +1,22 @@
+/* .background-section {
+  background: url('../../assets/images/blogs.png') center center / cover
+    no-repeat rgb(230, 230, 230);
+  height: 550px;
+}
+
+@media (max-width: 991px) {
+  .background-section {
+    background: none;
+    display: flex;
+    justify-content: center;
+  }
+} */
+/* @media (min-width: 768px) {
+  .blog-bg {
+    background-image: url('./assets/images/blogs.png') !important;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+} */

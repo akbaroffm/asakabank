@@ -5,11 +5,12 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/autoplay';
 import './Vacancies.css';
-
 import { EffectCoverflow, Autoplay, Mousewheel } from 'swiper/modules';
+import { useNavigate } from 'react-router-dom';
 
 function VacanciesSection() {
   const [vacancies, setVacancies] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVacanciesData = async () => {
@@ -24,6 +25,10 @@ function VacanciesSection() {
     };
     fetchVacanciesData();
   }, []);
+
+  const handleVacancyClick = (slug) => {
+    navigate(`/vacancies/${slug}`);
+  };
 
   return (
     <div className="bg-[#333232] py-[80px] mb-[60px]">
@@ -65,13 +70,14 @@ function VacanciesSection() {
           speed={600}
           modules={[Mousewheel, Autoplay, EffectCoverflow]}
           mousewheel={{ forceToAxis: true }}
-          className="flex gap-4 swiper-3d "
+          className="flex gap-4 swiper-3d"
         >
           {vacancies.length > 0 &&
             vacancies.map((vacancy) => (
               <SwiperSlide
                 key={vacancy?.id}
-                className="flex items-center justify-center"
+                onClick={() => handleVacancyClick(vacancy?.slug)}
+                className="flex items-center justify-center cursor-pointer"
               >
                 <div className="flex items-center flex-col rounded-[20px] py-[40px] px-[20px] bg-vacancy w-[380px] justify-between h-[400px] text-center mx-auto m-0">
                   <div>
