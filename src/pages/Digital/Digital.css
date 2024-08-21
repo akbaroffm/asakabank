@@ -1,0 +1,18 @@
+.it-bg {
+  background: url(../../assets/images/it-vacancies.png) center bottom / cover
+    no-repeat;
+  border-radius: 20px;
+  margin: 32px 0px 0px;
+  padding: 20px 28px;
+}
+
+@media (max-width: 768px) {
+  .it-bg {
+    background: none;
+    padding: 60px 0px;
+  }
+}
+
+/* .content {
+  height: initial;
+} */

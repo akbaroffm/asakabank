@@ -18,6 +18,15 @@ const ListVacancies = ({
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   };
+
+  const truncateDescription = (description, wordLimit = 24) => {
+    const words = description.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return description;
+  };
+
   const handleVacancyClick = (slug) => {
     window.scrollTo({
       top: 0,
@@ -70,7 +79,7 @@ const ListVacancies = ({
                   <span>{formatDate(result.created_date)}</span>
                 </div>
                 <p className="text-[#444] text-[17px] font-[500] my-5 leading-[150%]">
-                  {result.description}
+                  {truncateDescription(result.description)}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {result.tags.map((tag) => (

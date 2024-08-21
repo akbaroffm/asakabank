@@ -19,7 +19,7 @@ function ProcessSection() {
     <div className="pb-[60px] px-4">
       <div className="container mx-auto">
         <div className="text-center max-w-[750px] mx-auto mb-16">
-          <h3 className="font-bold text-[32px] lg:text-[36px]">
+          <h3 className="font-bold text-[24px] lg:text-[36px]">
             Ishga qabul qilish jarayoni
           </h3>
           <p className="font-normal text-[16px] lg:text-[18px] mt-4">

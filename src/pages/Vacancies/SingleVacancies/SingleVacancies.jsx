@@ -151,6 +151,14 @@ const SingleVacancy = () => {
     document.getElementById('cv-upload').click();
   };
 
+  const truncateDescription = (description, wordLimit = 24) => {
+    const words = description.split(' ');
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...';
+    }
+    return description;
+  };
+
   if (loading) {
     return (
       <div className="text-center p-4">
@@ -281,7 +289,7 @@ const SingleVacancy = () => {
                   <span>{formatDate(similarVacancy.created_date)}</span>
                 </div>
                 <p className="text-[#444] text-[17px] font-[500] my-5 leading-[150%]">
-                  {similarVacancy.description}
+                  {truncateDescription(similarVacancy.description)}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {similarVacancy.tags.map((tag) => (

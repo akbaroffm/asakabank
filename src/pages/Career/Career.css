@@ -1,0 +1,26 @@
+.career-bg {
+  background: url(../../assets/images/career.png) center bottom / cover
+    no-repeat;
+  border-radius: 20px;
+  margin: 32px 0px 0px;
+  padding: 20px 28px;
+}
+
+@media (max-width: 768px) {
+  .career-bg {
+    background: none;
+    padding: 60px 0px;
+  }
+}
+
+.career-text p {
+  font-size: 17px;
+  line-height: 150%;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .career-text p {
+    font-size: 15px;
+  }
+}

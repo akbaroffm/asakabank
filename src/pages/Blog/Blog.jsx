@@ -33,16 +33,11 @@ function Blog() {
   return (
     <div>
       <div className="container mx-auto">
-        <div
-          className="px-3 rounded-[20px]"
-          style={{
-            background: `url(${BlogImg}) center center / cover no-repeat rgb(230, 230, 230)`,
-          }}
-        >
+        <div className="px-3 rounded-[20px] blog-bg">
           <div className="container mx-auto px-4">
-            <div className="mt-[32px] py-[20px] px-[28px]">
-              <div className="flex flex-col h-[550px] items-start justify-center max-w-[470px]">
-                <h2 className="font-[700] text-[28px] md:text-[36px] leading-[160%] mb-[32px]">
+            <div className="">
+              <div className="flex flex-col text-center md:text-start md:h-[550px] md:items-start justify-center md:max-w-[470px]">
+                <h2 className="font-[700] text-[28px] md:text-[36px] leading-[160%] mb-[32px] md:mt-[-100px]">
                   Xodimlarning Asakabankdagi hayoti
                 </h2>
                 <p className="text-[15px] md:text-[20px] font-[500] leading-[160%]">

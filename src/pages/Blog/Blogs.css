@@ -1,22 +1,14 @@
-/* .background-section {
-  background: url('../../assets/images/blogs.png') center center / cover
-    no-repeat rgb(230, 230, 230);
-  height: 550px;
+.blog-bg {
+  background: url(../../assets/images/blogs.png) center bottom / cover no-repeat;
+  border-radius: 20px;
+  margin: 32px 0px 0px;
+  padding: 20px 28px;
 }
-
-@media (max-width: 991px) {
-  .background-section {
+@media (max-width: 768px) {
+  .blog-bg {
     background: none;
     display: flex;
     justify-content: center;
+    padding: 60px 0px;
   }
-} */
-/* @media (min-width: 768px) {
-  .blog-bg {
-    background-image: url('./assets/images/blogs.png') !important;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-} */
+}

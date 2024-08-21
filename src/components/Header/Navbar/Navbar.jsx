@@ -18,7 +18,7 @@ const Navbar = ({ onLanguageChange }) => {
   };
 
   return (
-    <div className="bg-white p-2">
+    <div className="bg-white p-2 shadow-navbar">
       <div className="container mx-auto p-4 relative ">
         <div className="flex items-center justify-between p-2">
           <div className="relative z-20">
