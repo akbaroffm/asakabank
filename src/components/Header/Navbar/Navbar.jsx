@@ -56,7 +56,7 @@ const Navbar = ({ onLanguageChange }) => {
 
           <div className="flex space-x-10">
             <ul
-              className={`flex-col white rounded-[25px] md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static md:w-auto transition-all duration-300 ease-in-out z-10 ${
+              className={`flex-col space-y-0.5 md:space-y-0 pb-2 md:pb-0  white rounded-[25px] md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static md:w-auto transition-all duration-300 ease-in-out z-10 ${
                 isOpen
                   ? 'top-11 bg-white right-0 h-auto mb-3  opacity-100'
                   : 'top-[-490px] right-0 opacity-0 md:opacity-100'
