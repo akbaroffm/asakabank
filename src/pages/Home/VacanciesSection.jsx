@@ -31,7 +31,7 @@ function VacanciesSection() {
   };
 
   return (
-    <div className="bg-[#333232] py-[80px] mb-[60px]">
+    <div className="bg-[#333232] py-[80px] mb-[60px] ">
       <div className="container mx-auto">
         <div className="max-w-[750px] mx-auto">
           <h2 className="text-center text-[32px] text-white font-[700]">
@@ -77,7 +77,7 @@ function VacanciesSection() {
               <SwiperSlide
                 key={vacancy?.id}
                 onClick={() => handleVacancyClick(vacancy?.slug)}
-                className="flex items-center justify-center cursor-pointer"
+                className="flex items-center justify-center cursor-pointer vacancies-slider"
               >
                 <div className="flex items-center flex-col rounded-[20px] py-[40px] px-[20px] bg-vacancy w-[380px] justify-between h-[400px] text-center mx-auto m-0">
                   <div>

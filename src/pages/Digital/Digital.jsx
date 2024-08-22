@@ -41,7 +41,7 @@ function Digital() {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="container mx-auto">
         <div className="it-bg">
           <div className="content flex flex-col items-center md:items-start justify-center md:max-w-[470px] md:h-[550px] text-center md:text-start">

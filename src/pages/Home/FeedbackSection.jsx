@@ -66,7 +66,7 @@ function FeedbackSection() {
               key={item.id}
               className="flex flex-col p-[18px] cursor-pointer bg-white border border-gray-200 rounded-[20px] mb-6"
             >
-              <div className="flex flex-col pt-[24px] pb-[12px] relative">
+              <div className="flex flex-col pt-[24px] pb-[12px] relative ">
                 <div className="absolute right-0 top-[-10px]">
                   <svg fill="none" height="56" viewBox="0 0 56 56" width="56">
                     <path

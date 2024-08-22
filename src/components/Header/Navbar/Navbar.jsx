@@ -18,11 +18,11 @@ const Navbar = ({ onLanguageChange }) => {
   };
 
   return (
-    <div className="bg-white p-2 shadow-navbar">
+    <div className="navbar-fix md:p-2 p-1 shadow-navbar fixed top-0 w-full z-50">
       <div className="container mx-auto p-4 relative ">
         <div className="flex items-center justify-between p-2">
           <div className="relative z-20">
-            <Link className="inline-block" to={'/'}>
+            <Link className="" to={'/'}>
               <img
                 className="w-[180px] md:w-[228px]"
                 src={AsakaLogo}
@@ -56,10 +56,10 @@ const Navbar = ({ onLanguageChange }) => {
 
           <div className="flex space-x-10">
             <ul
-              className={`flex-col md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static w-full md:w-auto transition-all duration-300 ease-in-out z-10 ${
+              className={`flex-col white rounded-[25px] md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static md:w-auto transition-all duration-300 ease-in-out z-10 ${
                 isOpen
-                  ? 'top-16 left-0 opacity-100'
-                  : 'top-[-490px] left-0 opacity-0 md:opacity-100'
+                  ? 'top-11 bg-white right-0 h-auto mb-3  opacity-100'
+                  : 'top-[-490px] right-0 opacity-0 md:opacity-100'
               }`}
             >
               <NavLink

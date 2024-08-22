@@ -18,10 +18,10 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen bg-[#F8F8F8]">
       {/* // md:py-[12px] */}
-      <div className="">
+      <div className="md:pt-[60px] pt-[45px]">
         <Navbar />
       </div>
-      <main className="flex-grow">
+      <main className="flex-grow ">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route

@@ -12,7 +12,7 @@ import './About.css';
 
 function AboutBank() {
   return (
-    <div className="px-4">
+    <div className="px-4 ">
       <div className="container mx-auto">
         <div className="about-bg">
           <div className="content flex flex-col items-center md:items-start justify-center md:max-w-[470px] md:h-[550px] text-center md:text-start px-4">
@@ -25,7 +25,7 @@ function AboutBank() {
             </p>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start py-[30px] md:py-[60px]">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start py-[60px] md:py-[60px]">
           <div className="w-full lg:w-1/2 mb-6 md:mb-0 left slide-image about-img">
             <Swiper
               className="rounded-[20px] max-h-[400px]"

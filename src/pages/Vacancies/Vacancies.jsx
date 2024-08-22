@@ -68,7 +68,7 @@ function Vacancies() {
   }, [language]);
 
   return (
-    <div>
+    <div className="bg-[#f8f8f8]">
       <div
         className="heroBg px-3"
         style={{

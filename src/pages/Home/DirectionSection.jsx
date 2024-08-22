@@ -68,7 +68,7 @@ function DirectionSection() {
           <SwiperSlide
             key={category?.id}
             onClick={() => handleCategoryClick(category)}
-            className="cursor-pointer flex flex-col items-center space-y-10 pt-[15px] px-[10px] w-[380px] h-[450px] rounded-[20px] bg-[#efefef]"
+            className="cursor-pointer flex flex-col items-center space-y-10 pt-[15px] px-[10px] w-[380px] direction-slider h-[450px] rounded-[20px] bg-[#efefef]"
           >
             <h4 className="text-[18px] font-[500] leading-[160%] text-center">
               {category?.name}
@@ -80,7 +80,7 @@ function DirectionSection() {
             />
           </SwiperSlide>
         ))}
-        <SwiperSlide className=" flex flex-col items-center space-y-10 pt-[15px] px-[10px] w-[380px] h-[450px] rounded-[20px] bg-[#efefef]">
+        <SwiperSlide className=" flex flex-col items-center space-y-10 pt-[15px] px-[10px] w-[380px] h-[450px] direction-slider rounded-[20px] bg-[#efefef]">
           <h4 className="text-[18px] font-[500] leading-[160%] text-center">
             Va boshqa yo'nalishlar
           </h4>

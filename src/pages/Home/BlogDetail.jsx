@@ -43,7 +43,7 @@ function BlogDetail() {
       <div className="container mx-auto px-4 py-8">
         {blog ? (
           <div className="flex justify-center">
-            <div className="rounded-[24px] max-w-[816px] p-[32px] bg-white">
+            <div className="rounded-[24px] max-w-[816px] md:p-[32px] bg-white">
               <h1 className="text-[24px] md:text-[32px] font-[700] leading-[150%] ">
                 {blog.title}
               </h1>
