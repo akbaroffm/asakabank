@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.6",
     "antd": "^5.19.3",
+    "aos": "^2.3.4",
     "axios": "^1.7.2",
     "dompurify": "^3.1.6",
     "embla-carousel-react": "^8.1.8",

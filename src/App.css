@@ -75,6 +75,36 @@ body {
   box-shadow: rgba(13, 46, 105, 0.1) 0px 1px 20px 0px;
 }
 
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}
+
+.menu-open {
+  animation: slideIn 0.2s forwards;
+}
+
+.menu-closed {
+  animation: slideOut 0.2s forwards;
+}
+
 /* @media only screen and (max-width: 600px) {
   .logo {
     width: 180px !important;

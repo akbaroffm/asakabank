@@ -3,6 +3,7 @@ import AsakaLogo from '../../../assets/images/asakalogo.png';
 import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import 'aos/dist/aos.css';
 
 const Navbar = ({ onLanguageChange }) => {
   const { t, i18n } = useTranslation('common');
@@ -58,8 +59,8 @@ const Navbar = ({ onLanguageChange }) => {
             <ul
               className={`flex-col space-y-0.5 md:space-y-0 pb-2 md:pb-0  white rounded-[25px] md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static md:w-auto transition-all duration-300 ease-in-out z-10 ${
                 isOpen
-                  ? 'top-11 bg-white right-0 h-auto mb-3  opacity-100'
-                  : 'top-[-490px] right-0 opacity-0 md:opacity-100'
+                  ? 'top-11 bg-white right-1 h-auto mb-3 opacity-100 menu-open'
+                  : 'hidden  right-1 opacity-0 md:opacity-100 menu-close'
               }`}
             >
               <NavLink
