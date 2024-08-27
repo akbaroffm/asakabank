@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import HeroImg from '../../../assets/images/heroImg.png';
@@ -28,6 +28,21 @@ const SingleVacancy = () => {
     agreement: false,
     vacancy: null,
   });
+
+  const modalRef = useRef(null);
+
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      handleModalClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchVacancy = async () => {
@@ -307,8 +322,14 @@ const SingleVacancy = () => {
         </div>
       </div>
       {isModalVisible && (
-        <div className=" h-auto fixed inset-0 bg-gray-300 bg-opacity-50 flex md:flex md:justify-center md:items-center z-50 overflow-auto md:pt-[50px] p-4 md:pb-[40px]">
-          <div className="bg-white py-[30px] px-[24px] rounded-[24px] w-full max-w-[780px] modal-content">
+        <div
+          className="fixed inset-0 bg-gray-300 bg-opacity-50 flex md:flex md:justify-center md:items-center z-50 overflow-auto md:pt-[50px] p-4 md:pb-[40px]"
+          onClick={handleClickOutside}
+        >
+          <div
+            ref={modalRef}
+            className="bg-white py-[30px] px-[24px] rounded-[24px] w-full max-w-[780px] modal-content h-[850px] md:h-auto"
+          >
             <div className="flex justify-between items-start">
               <h2 className="text-[22px] font-[700] mb-[20px] inline-block">
                 Ariza berish
@@ -434,13 +455,6 @@ const SingleVacancy = () => {
                 </label>
               </div>
               <div className="flex justify-end w-full pt-[24px]">
-                {/* <button
-                  type="button"
-                  className="mr-2 px-4 py-2 bg-gray-300 text-black rounded-md"
-                  onClick={handleModalClose}
-                >
-                  Bekor qilish
-                </button> */}
                 <button
                   type="submit"
                   className={`bg-red-500 rounded-[12px] text-white font-[500] text-[17px] px-[36px] py-[14px] ${

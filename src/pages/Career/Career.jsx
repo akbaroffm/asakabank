@@ -10,7 +10,7 @@ import './Career.css';
 
 function Career() {
   return (
-    <div className="bg-white">
+    <div className="">
       <div className="container mx-auto">
         <div className="career-bg">
           <div className="content flex flex-col items-center md:items-start justify-center md:max-w-[550px] md:h-[550px] text-center md:text-start px-4">

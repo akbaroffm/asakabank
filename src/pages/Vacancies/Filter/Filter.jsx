@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import api from '../../../services/api';
 
@@ -7,30 +7,12 @@ const Filter = ({ onFilter, filter, setFilter, defaultFilter }) => {
   const { language } = i18n;
 
   const jobTypes = [
-    {
-      value: '',
-      label: t('all'),
-    },
-    {
-      value: 'full_time',
-      label: t('full_time'),
-    },
-    {
-      value: 'part_time',
-      label: t('part_time'),
-    },
-    {
-      value: 'contract',
-      label: t('contract'),
-    },
-    {
-      value: 'temporary',
-      label: t('temporary'),
-    },
-    {
-      value: 'internship',
-      label: t('internship'),
-    },
+    { value: '', label: t('all') },
+    { value: 'full_time', label: t('full_time') },
+    { value: 'part_time', label: t('part_time') },
+    { value: 'contract', label: t('contract') },
+    { value: 'temporary', label: t('temporary') },
+    { value: 'internship', label: t('internship') },
   ];
 
   const { job_type, direction, branch } = filter || {};
@@ -39,10 +21,19 @@ const Filter = ({ onFilter, filter, setFilter, defaultFilter }) => {
   const [isJobTypeOpen, setIsJobTypeOpen] = useState(false);
   const [directions, setDirections] = useState([]);
   const [branches, setBranches] = useState([]);
-  // const [loading, setLoading] = useState(true);
+
+  const directionRef = useRef(null);
+  const branchRef = useRef(null);
+  const jobTypeRef = useRef(null);
 
   const resetFilter = () => {
     onFilter(defaultFilter);
+  };
+
+  const closeAllDropdowns = () => {
+    setIsDirectionOpen(false);
+    setIsBranchOpen(false);
+    setIsJobTypeOpen(false);
   };
 
   useEffect(() => {
@@ -67,14 +58,30 @@ const Filter = ({ onFilter, filter, setFilter, defaultFilter }) => {
         ]);
       } catch (error) {
         console.error('Error fetching data:', error);
-      } finally {
-        // setLoading(false);
       }
     };
     fetchData();
   }, [language]);
 
-  // if (loading) return <div>{t('loading')}</div>;
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        directionRef.current &&
+        !directionRef.current.contains(event.target) &&
+        branchRef.current &&
+        !branchRef.current.contains(event.target) &&
+        jobTypeRef.current &&
+        !jobTypeRef.current.contains(event.target)
+      ) {
+        closeAllDropdowns();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="relative bg-white border border-gray-300 rounded-[20px] p-4 w-full md:w-[400px] mb-4 md:mb-0">
@@ -92,7 +99,7 @@ const Filter = ({ onFilter, filter, setFilter, defaultFilter }) => {
       <label className="block text-gray-400 text-sm mb-2 font-semibold ml-5">
         {t('direction')}
       </label>
-      <div className="relative mb-4">
+      <div className="relative mb-4" ref={directionRef}>
         <button
           onClick={() => setIsDirectionOpen(!isDirectionOpen)}
           className="w-full border border-gray-300 rounded-lg p-3 text-left bg-[#F9F9F9] text-gray-900 focus:outline-none focus:border-red-500 font-[500]"
@@ -136,7 +143,7 @@ const Filter = ({ onFilter, filter, setFilter, defaultFilter }) => {
       <label className="block text-gray-400 text-sm mb-2 font-semibold ml-5">
         {t('branch')}
       </label>
-      <div className="relative mb-4">
+      <div className="relative mb-4" ref={branchRef}>
         <button
           onClick={() => setIsBranchOpen(!isBranchOpen)}
           className="w-full border border-gray-300 rounded-lg p-3 text-left bg-[#F9F9F9] text-gray-900 focus:outline-none focus:border-red-500 font-[500]"
@@ -180,7 +187,7 @@ const Filter = ({ onFilter, filter, setFilter, defaultFilter }) => {
       <label className="block text-gray-400 text-sm mb-2 font-semibold ml-5">
         {t('jobType')}
       </label>
-      <div className="relative mb-4">
+      <div className="relative mb-4" ref={jobTypeRef}>
         <button
           onClick={() => setIsJobTypeOpen(!isJobTypeOpen)}
           className="w-full border border-gray-300 rounded-lg p-3 text-left bg-[#F9F9F9] text-gray-900 focus:outline-none focus:border-red-500 font-[500]"
@@ -223,9 +230,9 @@ const Filter = ({ onFilter, filter, setFilter, defaultFilter }) => {
 
       <button
         onClick={() => onFilter(filter)}
-        className="w-full bg-red-500 text-white py-3 px-4 rounded-lg  mt-4 font-[500] hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+        className="w-full bg-red-500 text-white py-3 px-4 rounded-lg  mt-4 font-[500] hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
       >
-        {t('filter')}
+        {t('apply')}
       </button>
     </div>
   );

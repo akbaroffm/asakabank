@@ -12,16 +12,19 @@ import './components/i18n';
 import { useState } from 'react';
 import Home from './pages/Home/Home';
 import BlogDetail from './pages/Home/BlogDetail';
+import ScrollToTop from './components/ScrollTop/ScrollTop';
 
 function App() {
-  const [language, setLanguage] = useState('uz'); // Default language
+  const [language, setLanguage] = useState('uz');
+
   return (
     <div className="flex flex-col min-h-screen bg-[#F8F8F8]">
       {/* // md:py-[12px] */}
       <div className="md:pt-[60px] pt-[45px]">
         <Navbar />
       </div>
-      <main className="flex-grow ">
+      <main className="flex-grow">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route

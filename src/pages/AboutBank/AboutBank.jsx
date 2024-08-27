@@ -3,14 +3,50 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination } from 'swiper/modules';
+import './About.css';
+import { useRef } from 'react';
+import { useEffect } from 'react';
+import { CountUp } from 'countup.js';
 import about_1 from '../../assets/images/about-1.png';
 import about_2 from '../../assets/images/about-2.png';
 import about_3 from '../../assets/images/about-3.png';
 import about_4 from '../../assets/images/about-4.png';
 import about_5 from '../../assets/images/about-5.png';
-import './About.css';
+import Award from '../../assets/images/design.png';
+import MDH from '../../assets/images/mdh.png';
+import Invt from '../../assets/images/invistit.png';
+import Top from '../../assets/images/top.png';
+import Year from '../../assets/images/year.png';
+import Borrower from '../../assets/images/borrower.png';
 
 function AboutBank() {
+  const countRefs = useRef([]);
+
+  useEffect(() => {
+    const countUps = countRefs.current.map((ref, index) => {
+      const targetValue = [2000, 1500, 1100][index];
+      return new CountUp(ref, targetValue, {
+        startVal: 0,
+        duration: 2,
+        separator: ',',
+      });
+    });
+
+    const handleScroll = () => {
+      countRefs.current.forEach((ref, index) => {
+        const rect = ref.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+          countUps[index].start();
+          window.removeEventListener('scroll', handleScroll);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   return (
     <div className="px-4 ">
       <div className="container mx-auto">
@@ -133,7 +169,12 @@ function AboutBank() {
                 </linearGradient>
               </defs>
             </svg>
-            <h4 className="text-[32px] font-[700] mt-[24px]">2000+</h4>
+            <h4
+              ref={(el) => (countRefs.current[0] = el)}
+              className="text-[32px] font-[700] mt-[24px]"
+            >
+              2000+
+            </h4>
             <h5 className="text-[17px] font-[500] mt-[12px] leading-[150%]">
               Bank xodimlari
             </h5>
@@ -188,7 +229,12 @@ function AboutBank() {
                 </clipPath>
               </defs>
             </svg>
-            <h4 className="text-[32px] font-[700] mt-[24px]">1500+</h4>
+            <h4
+              ref={(el) => (countRefs.current[1] = el)}
+              className="text-[32px] font-[700] mt-[24px]"
+            >
+              1500+
+            </h4>
             <h5 className="text-[17px] font-[500] mt-[12px] leading-[150%]">
               Oliy ma'lumotli xodimlar
             </h5>
@@ -213,10 +259,120 @@ function AboutBank() {
                 </linearGradient>
               </defs>
             </svg>
-            <h4 className="text-[32px] font-[700] mt-[24px]">1100+</h4>
+            <h4
+              ref={(el) => (countRefs.current[2] = el)}
+              className="text-[32px] font-[700] mt-[24px]"
+            >
+              1100+
+            </h4>
             <h5 className="text-[17px] font-[500] mt-[12px] leading-[150%]">
               Bank mutaxassislari
             </h5>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row md:justify-between pb-[60px] px-4">
+          <div className="left w-full md:max-w-[400px] mb-6 md:mb-0">
+            <h2 className="text-[28px] md:text-[36px] font-[700] leading-[150%]">
+              Yutuqlar va mukofotlar
+            </h2>
+            <h3 className="text-[15px] md:text-[20px] font-[500] leading-[160%] mt-[24px]">
+              Bir necha bor O‘zbekistonda yilning "Eng yaxshi banki" deb tan
+              olingan hamda Raqamlashtirish bo'yicha birinchilardan hisoblanadi
+            </h3>
+          </div>
+          <div className="about-right w-full md:w-2/3">
+            <Swiper
+              slidesPerView={1}
+              modules={[Autoplay]}
+              spaceBetween={30}
+              autoplay={{ delay: 3000 }}
+              loop={true}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+                1280: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              <SwiperSlide>
+                <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
+                  <img src={Award} alt="award" />
+                  <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
+                    Eng yaxshi stend dizayni
+                  </h4>
+                  <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
+                    BankExpo-2015 ko’rgazmasida Asaka banki "Eng yaxshi stend
+                    dizayni" nominatsiyasida g'olib deb topildi
+                  </h5>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
+                  <img src={MDH} alt="award" />
+                  <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
+                    MDH, Boltiqbo'yi davlatlari, Gruziyaning yil banki - 2010
+                  </h4>
+                  <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
+                    Asakabank «Банкиръ» (Ukraina) nashriyoti tomonidan tashkil
+                    etilgan xalqaro tanlovda ishtirok etib, «MDH, Baltiya va
+                    Gruziyada eng ochiq va shafof bank» deb topildi
+                  </h5>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
+                  <img src={Invt} alt="award" />
+                  <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
+                    O‘zbekistondagi eng yaxshi investitsiya banki - 2020
+                  </h4>
+                  <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
+                    Asakabank – Global banking &amp; finance reytingi bo‘yicha
+                    2020-yildagi O‘zbekistonning eng yaxshi investitsiya banki
+                  </h5>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
+                  <img src={Top} alt="award" />
+                  <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
+                    Eng yaxshi bank
+                  </h4>
+                  <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
+                    Asakabank - Asiamoney KO'B yo‘nalishidagi eng yaxshi bank
+                  </h5>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
+                  <img src={Year} alt="award" />
+                  <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
+                    2019 - Yil brendi
+                  </h4>
+                  <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
+                    Brend-2019 Marketing yetakchisi
+                  </h5>
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
+                  <img src={Borrower} alt="award" className="" />
+                  <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
+                    Borrower of the year
+                  </h4>
+                  <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
+                    Financial CBONDS Information - Borrower of the year
+                  </h5>
+                </div>
+              </SwiperSlide>
+            </Swiper>
           </div>
         </div>
       </div>

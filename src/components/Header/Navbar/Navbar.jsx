@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import AsakaLogo from '../../../assets/images/asakalogo.png';
 import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
@@ -8,6 +8,7 @@ import 'aos/dist/aos.css';
 const Navbar = ({ onLanguageChange }) => {
   const { t, i18n } = useTranslation('common');
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null); // Create a ref for the menu
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -18,9 +19,23 @@ const Navbar = ({ onLanguageChange }) => {
     onLanguageChange(lang);
   };
 
+  // Handle clicks outside of the menu
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="navbar-fix md:p-2 p-1 shadow-navbar fixed top-0 w-full z-50">
-      <div className="container mx-auto p-4 relative ">
+      <div className="container mx-auto p-4 relative">
         <div className="flex items-center justify-between p-2">
           <div className="relative z-20">
             <Link className="" to={'/'}>
@@ -32,7 +47,7 @@ const Navbar = ({ onLanguageChange }) => {
             </Link>
           </div>
 
-          <div className="md:hidden flex items-center space-x-4 absolute right-0 top-1 p-2 z-30 ">
+          <div className="md:hidden flex items-center space-x-4 absolute right-0 top-1 p-2 z-30">
             <div className="flex space-x-2">
               <button
                 onClick={() => handleLanguageChange('ru')}
@@ -57,10 +72,11 @@ const Navbar = ({ onLanguageChange }) => {
 
           <div className="flex space-x-10">
             <ul
-              className={`flex-col space-y-0.5 md:space-y-0 pb-2 md:pb-0  white rounded-[25px] md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static md:w-auto transition-all duration-300 ease-in-out z-10 ${
+              ref={menuRef} // Attach the ref to the menu
+              className={`flex-col space-y-0.5 md:space-y-0 pb-2 md:pb-0 white rounded-[25px] md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static md:w-auto transition-all duration-300 ease-in-out z-10 ${
                 isOpen
                   ? 'top-11 bg-white right-1 h-auto mb-3 opacity-100 menu-open'
-                  : 'hidden  right-1 opacity-0 md:opacity-100 menu-close'
+                  : 'hidden right-1 opacity-0 md:opacity-100 menu-close'
               }`}
             >
               <NavLink

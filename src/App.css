@@ -50,12 +50,29 @@
   font-style: normal;
 }
 
+::selection {
+  background: red;
+  color: white;
+}
+
 body {
   font-family: 'Acrom', sans-serif !important;
   /* background-color: red !important; */
   /* overflow: auto; */
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 50px;
+}
+.chevron {
+  width: 25px !important;
+  height: 25px !important;
+}
 .no-scroll {
   overflow: hidden;
 }
@@ -278,3 +295,27 @@ img {
 /* .vacancies-slider {
     height: 400px !important;
   } */
+.about-right {
+  width: 55% !important;
+}
+@media only screen and (max-width: 752px) {
+  .about-right {
+    width: 100% !important;
+  }
+}
+.aboutBank-slider {
+  width: 200px !important;
+  height: 400px !important;
+}
+/* 
+@media only screen and (max-width: 1002px) {
+  .aboutslider-img {
+    width: 100% !important;
+    object-fit: contain !important;
+  }
+} */
+@media only screen and (max-width: 1002px) {
+  .aboutBank-slider {
+    width: 100% !important;
+  }
+}

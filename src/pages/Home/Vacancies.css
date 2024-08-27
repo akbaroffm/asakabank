@@ -23,3 +23,18 @@
 /* .swiper-slide {
   margin-right: 33px !important;
 } */
+
+.faqs,
+.right {
+  width: calc(50% - 10px);
+}
+
+@media (max-width: 768px) {
+  .faqs {
+    height: initial;
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }
+}

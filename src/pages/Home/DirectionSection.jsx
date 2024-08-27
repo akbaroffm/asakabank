@@ -18,7 +18,6 @@ function DirectionSection() {
         const results = response?.data?.results;
         const categories = Array.isArray(results) ? results : [];
         setCategories(categories);
-        console.log(categories);
       } catch (error) {
         console.error(error);
       }

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import api from '../../services/api';
 import { toast } from 'react-hot-toast';
 
 const Modal = ({ isVisible, onClose }) => {
+  const modalRef = useRef(null);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -16,11 +18,25 @@ const Modal = ({ isVisible, onClose }) => {
   });
   const [submitting, setSubmitting] = useState(false);
 
-  if (isVisible) {
-    document.body.classList.add('no-scroll');
-  } else {
-    document.body.classList.remove('no-scroll');
-  }
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    if (isVisible) {
+      document.body.classList.add('no-scroll');
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    return () => {
+      document.body.classList.remove('no-scroll');
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isVisible, onClose]);
 
   if (!isVisible) return null;
 
@@ -98,7 +114,10 @@ const Modal = ({ isVisible, onClose }) => {
 
   return (
     <div className="h-auto fixed inset-0 bg-gray-300 bg-opacity-50 flex md:flex md:justify-center md:items-center z-50 overflow-auto p-4">
-      <div className="bg-white py-[30px] px-[24px] rounded-[24px] w-full max-w-[780px]">
+      <div
+        ref={modalRef}
+        className="bg-white py-[30px] px-[24px] rounded-[24px] w-full h-[850px] md:h-auto max-w-[780px]"
+      >
         <div className="flex justify-between items-start mb-[20px]">
           <h2 className="text-[22px] font-[700]">Ariza berish</h2>
           <button className="bg-gray-200 rounded-[50%] p-2" onClick={onClose}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -9,11 +9,44 @@ import Instagram from '../../assets/images/instagram.svg';
 import Youtube from '../../assets/images/youtube.svg';
 import Telegram from '../../assets/images/telegram.svg';
 import { toast, Toaster } from 'react-hot-toast';
+import axios from 'axios';
 
 function Footer() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   toast.success('Yuborildi');
+  // };
+
+  const [formData, setFormData] = useState({
+    email: '',
+    phone: '',
+    letter: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     toast.success('Yuborildi');
+
+    try {
+      const response = await axios.post(
+        'https://career-api.asakabank.uz/contact-us/',
+        formData
+      );
+      if (response.status === 200) {
+        setSuccess('Form submitted successfully!');
+        setFormData({ email: '', phone: '', letter: '' });
+      }
+    } catch (error) {
+      setError('Failed to submit the form. Please try again.');
+    }
   };
 
   return (
@@ -55,7 +88,11 @@ function Footer() {
               </svg>
             </Link>
             <div className="md:hidden flex space-x-5 mb-4">
-              <a className="rounded-[50%] p-2 bg-red-500" href="#">
+              <a
+                target="_blank"
+                className="rounded-[50%] p-2 bg-red-500"
+                href="https://www.facebook.com/asakabankofficial"
+              >
                 <img
                   className="footer-social"
                   width={25}
@@ -64,7 +101,11 @@ function Footer() {
                   alt="Facebook"
                 />
               </a>
-              <a className="rounded-[50%] p-2 bg-red-500" href="#">
+              <a
+                target="_blank"
+                className="rounded-[50%] p-2 bg-red-500"
+                href="https://www.instagram.com/asakabankofficial"
+              >
                 <img
                   className="footer-social"
                   width={25}
@@ -73,7 +114,11 @@ function Footer() {
                   alt="Instagram"
                 />
               </a>
-              <a className="rounded-[50%] p-2 bg-red-500" href="#">
+              <a
+                target="_blank"
+                className="rounded-[50%] p-2 bg-red-500"
+                href="https://www.youtube.com/@AsakabankMatbuotMarkazi"
+              >
                 <img
                   className="footer-social"
                   width={25}
@@ -82,7 +127,11 @@ function Footer() {
                   alt="YouTube"
                 />
               </a>
-              <a className="rounded-[50%] p-2 bg-red-500" href="#">
+              <a
+                target="_blank"
+                className="rounded-[50%] p-2 bg-red-500"
+                href="https://t.me/Asakabank_official"
+              >
                 <img
                   className="footer-social"
                   width={25}
@@ -149,7 +198,13 @@ function Footer() {
             </a>
             <span className="animation-footer relative">
               <FmdGoodIcon className="mr-3" />
-              67 Nukus ko'chasi, Tashkent 100015, Oʻzbekiston
+              <a
+                target="_blank"
+                href="https://www.google.com/maps/place/Asakabank/@41.2899848,69.2734915,17z/data=!3m1!4b1!4m6!3m5!1s0x38ae8b5256bb721d:0xc3d3f3dad7dfd09d!8m2!3d41.2899848!4d69.2760664!16s%2Fg%2F11shx72sly?entry=ttu"
+              >
+                {' '}
+                67 Nukus ko'chasi, Tashkent 100015, Oʻzbekiston
+              </a>
             </span>
           </div>
           <div className="w-full md:w-auto">
@@ -157,7 +212,10 @@ function Footer() {
               <input
                 className="placeholder:text-[#737272] w-full md:w-[300px] rounded-[10px] border-[#737272] p-2 font-[500] text-[15px] bg-[#484747] border"
                 type="email"
+                name="email"
                 placeholder="Elektron pochta"
+                value={formData.email}
+                onChange={handleChange}
                 required
                 pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                 title="Notoʻgʻri elektron pochta formati"
@@ -165,15 +223,20 @@ function Footer() {
               <input
                 className="placeholder:text-[#737272] w-full md:w-[300px] rounded-[10px] border-[#737272] p-2 font-[500] text-[15px] bg-[#484747] border"
                 type="tel"
+                name="phone"
                 placeholder="Telefon raqam"
+                value={formData.phone}
+                onChange={handleChange}
                 required
                 pattern="^\+?[0-9]{7,15}$"
                 title="Notoʻgʻri telefon raqam"
               />
               <input
                 className="placeholder:text-[#737272] w-full md:w-[300px] rounded-[10px] border-[#737272] p-2 font-[500] text-[15px] bg-[#484747] border"
-                type="text"
+                name="letter"
                 placeholder="Xabar matni"
+                value={formData.letter}
+                onChange={handleChange}
                 required
               />
               <button
@@ -191,16 +254,32 @@ function Footer() {
             © Asakabank Aksiyadorlik Jamiyati 2024. Barcha huquqlar himoyalangan
           </p>
           <div className="hidden md:flex space-x-5">
-            <a className="rounded-[50%] p-2 bg-red-500" href="#">
+            <a
+              target="_blank"
+              className="rounded-[50%] p-2 bg-red-500"
+              href="https://www.facebook.com/asakabankofficial"
+            >
               <img width={25} height={25} src={Facebook} alt="Facebook" />
             </a>
-            <a className="rounded-[50%] p-2 bg-red-500" href="#">
+            <a
+              target="_blank"
+              className="rounded-[50%] p-2 bg-red-500"
+              href="https://www.instagram.com/asakabankofficial"
+            >
               <img width={25} height={25} src={Instagram} alt="Instagram" />
             </a>
-            <a className="rounded-[50%] p-2 bg-red-500" href="#">
+            <a
+              target="_blank"
+              className="rounded-[50%] p-2 bg-red-500"
+              href="https://www.youtube.com/@AsakabankMatbuotMarkazi"
+            >
               <img width={25} height={25} src={Youtube} alt="YouTube" />
             </a>
-            <a className="rounded-[50%] p-2 bg-red-500" href="#">
+            <a
+              target="_blank"
+              className="rounded-[50%] p-2 bg-red-500"
+              href="https://t.me/Asakabank_official"
+            >
               <img width={25} height={25} src={Telegram} alt="Telegram" />
             </a>
           </div>
