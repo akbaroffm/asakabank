@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../services/api';
+import { useTranslation } from 'react-i18next';
 
 function BlogDetail() {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
+
+  const { t, i18n } = useTranslation('common');
+  const { language } = i18n;
 
   useEffect(() => {
     const fetchBlogData = async () => {
@@ -16,7 +20,7 @@ function BlogDetail() {
       }
     };
     fetchBlogData();
-  }, [id]);
+  }, [id, language, t]);
 
   const renderVideo = () => {
     if (blog?.link && blog.link.includes('youtube.com')) {
@@ -48,7 +52,7 @@ function BlogDetail() {
                 {blog.title}
               </h1>
               <p className="text-[#555] font-[500] leading-[160%] mt-[20px]">
-                Asakabankning o'z chempionlari bor
+                {t('blog-chempion')}
               </p>
               <img
                 src={blog.image.url}

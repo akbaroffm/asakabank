@@ -4,11 +4,13 @@ import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import 'aos/dist/aos.css';
+import RU from '../../../assets/images/ru.png';
+import UZ from '../../../assets/images/uz.png';
 
 const Navbar = ({ onLanguageChange }) => {
   const { t, i18n } = useTranslation('common');
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef(null); // Create a ref for the menu
+  const menuRef = useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -19,7 +21,6 @@ const Navbar = ({ onLanguageChange }) => {
     onLanguageChange(lang);
   };
 
-  // Handle clicks outside of the menu
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -37,7 +38,7 @@ const Navbar = ({ onLanguageChange }) => {
     <div className="navbar-fix md:p-2 p-1 shadow-navbar fixed top-0 w-full z-50">
       <div className="container mx-auto p-4 relative">
         <div className="flex items-center justify-between p-2">
-          <div className="relative z-20">
+          <div className="relative z-20 mr-10">
             <Link className="" to={'/'}>
               <img
                 className="w-[180px] md:w-[228px]"
@@ -72,7 +73,7 @@ const Navbar = ({ onLanguageChange }) => {
 
           <div className="flex space-x-10">
             <ul
-              ref={menuRef} // Attach the ref to the menu
+              ref={menuRef}
               className={`flex-col space-y-0.5 md:space-y-0 pb-2 md:pb-0 white rounded-[25px] md:flex-row md:flex items-center space-x-0 md:space-x-[28px] text-[16px] font-medium absolute md:static md:w-auto transition-all duration-300 ease-in-out z-10 ${
                 isOpen
                   ? 'top-11 bg-white right-1 h-auto mb-3 opacity-100 menu-open'
@@ -136,18 +137,32 @@ const Navbar = ({ onLanguageChange }) => {
               </NavLink>
             </ul>
 
-            <div className="hidden md:flex space-x-2 z-30">
+            <div className="hidden md:flex space-x-4 z-30">
               <button
                 onClick={() => handleLanguageChange('ru')}
-                className="text-gray-800 focus:outline-none"
+                className="text-gray-800 focus:outline-none flex items-center "
               >
-                RU
+                <img
+                  src={RU}
+                  alt="ru"
+                  width={25}
+                  height={25}
+                  className="mr-2"
+                />
+                <p className="lg:opacity-100 opacity-0">RU</p>
               </button>
               <button
                 onClick={() => handleLanguageChange('uz')}
-                className="text-gray-800 focus:outline-none"
+                className="text-gray-800 focus:outline-none flex items-center"
               >
-                UZ
+                <img
+                  src={UZ}
+                  alt="uz"
+                  width={25}
+                  height={25}
+                  className="mr-2"
+                />
+                <p className="lg:opacity-100 opacity-0">UZ</p>
               </button>
             </div>
           </div>

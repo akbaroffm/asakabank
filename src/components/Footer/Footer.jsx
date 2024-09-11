@@ -10,12 +10,15 @@ import Youtube from '../../assets/images/youtube.svg';
 import Telegram from '../../assets/images/telegram.svg';
 import { toast, Toaster } from 'react-hot-toast';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 function Footer() {
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   //   toast.success('Yuborildi');
   // };
+  const { t, i18n } = useTranslation('common');
+  const { language } = i18n;
 
   const [formData, setFormData] = useState({
     email: '',
@@ -53,7 +56,7 @@ function Footer() {
     <div className="bg-[#333232] text-white pb-[20px] p-2 px-4">
       <Toaster position="top-center" />
       <div className="container mx-auto px-4 overflow-hidden">
-        <div className="flex flex-col md:flex-row md:justify-between py-[60px] space-y-10 md:space-y-0">
+        <div className="flex flex-col md:flex-row md:justify-between py-[60px] space-y-10 md:space-y-0 md:space-x-10">
           <div className="w-full md:w-[280px] flex flex-col md:items-start">
             <Link className="inline-block mb-[20px]" to={'/'}>
               <svg fill="none" height="28" viewBox="0 0 228 28" width="228">
@@ -141,38 +144,38 @@ function Footer() {
                 />
               </a>
             </div>
-            <p>Platforma Asakabank AJ tomonidan ishlab chiqilgan.</p>
+            <p>{t('platform')}</p>
           </div>
           <ul className="w-full md:w-auto flex flex-col space-y-4">
             <NavLink
               className={'animation-footer block relative'}
               to={'/vacancies'}
             >
-              Vakansiyalar
+              {t('vacancies')}
             </NavLink>
             <NavLink
               className={'animation-footer block relative'}
               to={'/digital'}
             >
-              IT va Digital
+              {t('it-vacancies')}
             </NavLink>
             <NavLink
               className={'animation-footer block relative'}
               to={'/career'}
             >
-              Karyera
+              {t('career')}
             </NavLink>
             <NavLink
               className={'animation-footer block relative'}
               to={'/blogs'}
             >
-              Blog
+              {t('blogs')}
             </NavLink>
             <NavLink
               className={'animation-footer block relative'}
               to={'/about'}
             >
-              Bank haqida
+              {t('about')}
             </NavLink>
           </ul>
           <div className="w-full md:w-[270px] flex flex-col space-y-5">
@@ -203,7 +206,7 @@ function Footer() {
                 href="https://www.google.com/maps/place/Asakabank/@41.2899848,69.2734915,17z/data=!3m1!4b1!4m6!3m5!1s0x38ae8b5256bb721d:0xc3d3f3dad7dfd09d!8m2!3d41.2899848!4d69.2760664!16s%2Fg%2F11shx72sly?entry=ttu"
               >
                 {' '}
-                67 Nukus ko'chasi, Tashkent 100015, Oʻzbekiston
+                {t('address')}
               </a>
             </span>
           </div>
@@ -213,7 +216,7 @@ function Footer() {
                 className="placeholder:text-[#737272] w-full md:w-[300px] rounded-[10px] border-[#737272] p-2 font-[500] text-[15px] bg-[#484747] border"
                 type="email"
                 name="email"
-                placeholder="Elektron pochta"
+                placeholder={t('email')}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -224,7 +227,7 @@ function Footer() {
                 className="placeholder:text-[#737272] w-full md:w-[300px] rounded-[10px] border-[#737272] p-2 font-[500] text-[15px] bg-[#484747] border"
                 type="tel"
                 name="phone"
-                placeholder="Telefon raqam"
+                placeholder={t('phone')}
                 value={formData.phone}
                 onChange={handleChange}
                 required
@@ -234,7 +237,7 @@ function Footer() {
               <input
                 className="placeholder:text-[#737272] w-full md:w-[300px] rounded-[10px] border-[#737272] p-2 font-[500] text-[15px] bg-[#484747] border"
                 name="letter"
-                placeholder="Xabar matni"
+                placeholder={t('message')}
                 value={formData.letter}
                 onChange={handleChange}
                 required
@@ -243,16 +246,14 @@ function Footer() {
                 type="submit"
                 className="w-full md:w-[300px] py-2.5 bg-white text-black rounded-[10px] hover:bg-gray-200"
               >
-                Jo'natish
+                {t('send')}
               </button>
             </form>
           </div>
         </div>
         <div className="border mb-5"></div>
         <div className="flex flex-col text-center md:flex-row md:justify-between items-center">
-          <p className="text-md mb-4 md:mb-0">
-            © Asakabank Aksiyadorlik Jamiyati 2024. Barcha huquqlar himoyalangan
-          </p>
+          <p className="text-md mb-4 md:mb-0">{t('asakabank')}</p>
           <div className="hidden md:flex space-x-5">
             <a
               target="_blank"

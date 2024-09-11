@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import api from '../../../services/api';
 
 const SingleVacancy = () => {
+  const nameInputRef = useRef(null);
   const { slug } = useParams();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation('singleVacancy');
@@ -22,7 +23,7 @@ const SingleVacancy = () => {
     firstName: '',
     lastName: '',
     middleName: '',
-    phone: '',
+    phone: '+998',
     email: '',
     cv: null,
     agreement: false,
@@ -79,6 +80,12 @@ const SingleVacancy = () => {
   const handleModalOpen = () => {
     setIsModalVisible(true);
     document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+      if (nameInputRef.current) {
+        nameInputRef.current.focus();
+      }
+    }, 100);
   };
 
   const handleModalClose = () => {
@@ -86,17 +93,52 @@ const SingleVacancy = () => {
     document.body.style.overflow = '';
   };
 
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\+998\d{9}$/;
+    if (!phoneRegex.test(phone)) {
+      setPhoneError("Telefon raqam noto'g'ri kiritilgan.");
+      return false;
+    } else {
+      setPhoneError('');
+      return true;
+    }
+  };
+
   const handleChange = (event) => {
     const { name, value, type, checked, files } = event.target;
-    setFormData({
-      ...formData,
-      [name]:
-        type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
-    });
+
+    if (name === 'phone') {
+      let phoneValue = value.replace(/[^\d+]/g, '');
+
+      if (!phoneValue.startsWith('+998')) {
+        phoneValue = '+998';
+      }
+
+      if (phoneValue.length > 13) {
+        phoneValue = phoneValue.slice(0, 13);
+      }
+
+      setFormData({
+        ...formData,
+        [name]: phoneValue,
+      });
+
+      validatePhone(phoneValue);
+    } else {
+      setFormData({
+        ...formData,
+        [name]:
+          type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
+      });
+    }
   };
 
   const handleModalSubmit = async (event) => {
     event.preventDefault();
+    if (!validatePhone(formData.phone)) {
+      toast.error("Iltimos, telefon raqamni to'g'ri kiriting.");
+      return;
+    }
     if (!formData.agreement) {
       alert(
         "Iltimos, shaxsiy ma'lumotlarni qayta ishlashga rozilik bildiring."
@@ -140,7 +182,7 @@ const SingleVacancy = () => {
         firstName: '',
         lastName: '',
         middleName: '',
-        phone: '',
+        phone: '+998',
         email: '',
         cv: null,
         agreement: false,
@@ -332,7 +374,7 @@ const SingleVacancy = () => {
           >
             <div className="flex justify-between items-start">
               <h2 className="text-[22px] font-[700] mb-[20px] inline-block">
-                Ariza berish
+                {t('success')}
               </h2>
               <button
                 className="bg-gray-200 rounded-[50%] px-[4px] py-[3px]"
@@ -347,7 +389,7 @@ const SingleVacancy = () => {
             >
               <div className="flex flex-col w-full sm:w-[calc(50%-8px)] pt-[24px]">
                 <label className="block text-[15px] font-[500] text-[#A3A3A3]">
-                  Ism *
+                  {t('name')} *
                 </label>
                 <input
                   autoComplete="off"
@@ -357,11 +399,12 @@ const SingleVacancy = () => {
                   onChange={handleChange}
                   className="font-[500] text-[17px] mt-1 block w-full border rounded-[12px] px-3 py-3 outline-none bg-[#FAFAFA] focus:border-red-500"
                   required
+                  ref={nameInputRef}
                 />
               </div>
               <div className="flex flex-col w-full sm:w-[calc(50%-8px)] pt-[24px]">
                 <label className="block text-[15px] font-[500] text-[#A3A3A3]">
-                  Familiya *
+                  {t('surname')} *
                 </label>
                 <input
                   autoComplete="off"
@@ -375,7 +418,7 @@ const SingleVacancy = () => {
               </div>
               <div className="flex flex-col w-full sm:w-[calc(50%-8px)] pt-[24px]">
                 <label className="block text-[15px] font-[500] text-[#A3A3A3]">
-                  Otasining ismi *
+                  {t('middlename')} *
                 </label>
                 <input
                   autoComplete="off"
@@ -389,7 +432,7 @@ const SingleVacancy = () => {
               </div>
               <div className="flex flex-col w-full sm:w-[calc(50%-8px)] pt-[24px]">
                 <label className="block text-[15px] font-[500] text-[#A3A3A3]">
-                  Telefon raqam *
+                  {t('phone')} *
                 </label>
                 <input
                   autoComplete="off"
@@ -421,7 +464,7 @@ const SingleVacancy = () => {
                   onClick={handleFileSelect}
                   className="font-[500] text-[17px] mt-1 block w-full border-dashed border-2 border-black rounded-[12px] px-3 py-3 outline-none bg-[#FAFAFA] text-gray-800"
                 >
-                  {formData.cv ? formData.cv.name : 'Rezyume / CV yuklang'}
+                  {formData.cv ? formData.cv.name : t('resume')}
                 </button>
                 <input
                   id="cv-upload"
@@ -448,9 +491,7 @@ const SingleVacancy = () => {
                         formData.agreement ? 'checked' : ''
                       }`}
                     />
-                    <span className="ml-2">
-                      Men shaxsiy ma'lumotlarni qayta ishlashga roziman
-                    </span>
+                    <span className="ml-2">{t('agree')}</span>
                   </div>
                 </label>
               </div>
@@ -464,7 +505,7 @@ const SingleVacancy = () => {
                   }`}
                   disabled={submitting || !formData.agreement}
                 >
-                  {submitting ? 'Yuborilyapti...' : 'Ariza berish'}
+                  {submitting ? t('wait') : t('success')}
                 </button>
               </div>
             </form>

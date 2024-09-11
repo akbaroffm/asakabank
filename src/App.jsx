@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Header/Navbar/Navbar';
@@ -9,17 +10,36 @@ import AboutBank from './pages/AboutBank/AboutBank';
 import Footer from './components/Footer/Footer';
 import SingleVacancy from './pages/Vacancies/SingleVacancies/SingleVacancies';
 import './components/i18n';
-import { useState } from 'react';
 import Home from './pages/Home/Home';
 import BlogDetail from './pages/Home/BlogDetail';
 import ScrollToTop from './components/ScrollTop/ScrollTop';
+import ContactShare from './components/Contact/Contact';
 
 function App() {
   const [language, setLanguage] = useState('uz');
+  const [showContactShare, setShowContactShare] = useState(true);
+
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (footerRef.current) {
+        const footerTop = footerRef.current.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        setShowContactShare(footerTop > windowHeight);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8F8F8]">
-      {/* // md:py-[12px] */}
       <div className="md:pt-[60px] pt-[45px]">
         <Navbar />
       </div>
@@ -39,7 +59,8 @@ function App() {
           <Route path="/about" element={<AboutBank />} />
         </Routes>
       </main>
-      <Footer />
+      <Footer ref={footerRef} />
+      {showContactShare && <ContactShare />}
     </div>
   );
 }

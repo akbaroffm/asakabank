@@ -2,11 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import './Digital.css';
+import { useTranslation } from 'react-i18next';
 
 function Digital() {
   const [vacancies, setVacancies] = useState([]);
   const vacanciesRef = useRef(null);
   const navigate = useNavigate();
+
+  const { t, i18n } = useTranslation('common');
+  const { language } = i18n;
 
   useEffect(() => {
     const fetchVacanciesData = async () => {
@@ -22,7 +26,7 @@ function Digital() {
       }
     };
     fetchVacanciesData();
-  }, []);
+  }, [language, t]);
 
   const handleVacancyClick = (slug) => {
     navigate(`/vacancies/${slug}`);
@@ -46,17 +50,16 @@ function Digital() {
         <div className="it-bg">
           <div className="content flex flex-col items-center md:items-start justify-center md:max-w-[470px] md:h-[550px] text-center md:text-start">
             <h2 className="text-[24px] md:text-[36px] font-[700] leading-[133%] md:mt-[-180px] ">
-              IT - cheksiz imkoniyatlar dunyosi!
+              {t('itvacancies-title')}
             </h2>
             <p className="text-[16px]  md:text-[20px] font-[500] leading-[150%] my-[24px]">
-              Bizning jamoamizga qo'shiling. Biz mijozlarimizga va o'zimiz uchun
-              qulaylik yaratamiz
+              {t('itvacancies-discription')}
             </p>
             <button
               onClick={handleScrollToVacancies}
               className="rounded-[12px] text-[17px] font-[500] h-[52px] px-[40px] bg-red-500 text-white"
             >
-              IT vakansiyalar
+              {t('itvacancies-btn')}
             </button>
           </div>
         </div>
@@ -65,7 +68,7 @@ function Digital() {
           className="flex flex-col items-center justify-center px-4"
         >
           <h3 className="text-[36px] font-[700] mt-[80px] mb-[60px] text-center">
-            IT vakansiyalar
+            {t('itvacancies-btn')}
           </h3>
           <div className="flex flex-wrap mb-[80px] max-w-[800px] gap-5">
             {vacancies.length > 0 ? (
@@ -83,7 +86,7 @@ function Digital() {
                       {new Date(result.created_date).toLocaleDateString()}
                     </span>
                   </div>
-                  <p className="text-[#444] text-[17px] font-[500] my-5 leading-[150%]">
+                  <p className="text-[#444] text-[17px] font-[500] my-5 leading-[150%] truncate-card">
                     {truncateDescription(result.description)}
                   </p>
                   <div className="flex flex-wrap gap-2">

@@ -1,0 +1,82 @@
+.contact-share {
+  position: fixed;
+  /* top: 100px; */
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+}
+
+.contact-icon {
+  padding: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: red;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 100;
+}
+
+.contact-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  opacity: 0;
+  transform: translateY(20px) scale(0.5);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: absolute;
+  right: 6px;
+  z-index: 90;
+}
+
+.contact-options a {
+  color: white;
+  padding: 8px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.contact-options.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.contact-options .option {
+  margin-top: 10px;
+  opacity: 0;
+  transform: translateY(-200px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.contact-options.open .option {
+  opacity: 1;
+  transform: translateY(-240px);
+}
+
+.contact-options .option img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.contact-options.open .email {
+  transition-delay: 0.1s;
+}
+
+.contact-options.open .phone {
+  transition-delay: 0.2s;
+}
+
+.contact-options.open .sms {
+  transition-delay: 0.3s;
+}
+
+.contact-icon:hover {
+  transform: scale(1.1);
+}

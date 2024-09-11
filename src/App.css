@@ -253,6 +253,13 @@ img {
   transition: background-color 0.3s, border-color 0.3s;
 }
 
+@media only screen and (max-width: 768px) {
+  .custom-checkbox {
+    width: 27px;
+    height: 23px;
+  }
+}
+
 .custom-checkbox.checked {
   background-color: red;
   border-color: red;
@@ -298,13 +305,13 @@ img {
 .about-right {
   width: 55% !important;
 }
-@media only screen and (max-width: 752px) {
+@media only screen and (max-width: 768px) {
   .about-right {
     width: 100% !important;
   }
 }
 .aboutBank-slider {
-  width: 200px !important;
+  width: 250px !important;
   height: 400px !important;
 }
 /* 
@@ -315,6 +322,21 @@ img {
   }
 } */
 @media only screen and (max-width: 1002px) {
+  .aboutBank-slider {
+    width: 100% !important;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .aboutBank-slider {
+    width: 200px !important;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .aboutBank-slider {
+    width: 200px !important;
+  }
+}
+@media only screen and (max-width: 768px) {
   .aboutBank-slider {
     width: 100% !important;
   }

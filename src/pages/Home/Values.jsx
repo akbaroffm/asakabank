@@ -4,9 +4,12 @@ import api from '../../services/api';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Values.css';
+import { useTranslation } from 'react-i18next';
 
 function Values() {
   const [valuesData, setValuesData] = useState([]);
+  const { t, i18n } = useTranslation('values');
+  const { language } = i18n;
 
   useEffect(() => {
     const fetchValuesData = async () => {
@@ -14,11 +17,11 @@ function Values() {
         const response = await api({ url: '/home-page/' });
         const results = response?.data?.results || [];
         const formattedData = results.map((item) => ({
-          title: item.title_uz || item.title,
+          title: t(`${item.title}`),
           imgSrc: item.icon.url,
           alt: item.icon.name,
           backInfo: {
-            description: item.description_uz || item.description,
+            description: t(`${item.description}`),
           },
         }));
         setValuesData(formattedData);
@@ -28,7 +31,7 @@ function Values() {
     };
 
     fetchValuesData();
-  }, []);
+  }, [language, t]);
 
   const settings = {
     infinite: true,
@@ -59,7 +62,7 @@ function Values() {
       <div className="my-[40px] px-1">
         <div className="px-2">
           <h2 className="md:text-[36px] text-[24px] font-[700]">
-            Bizning <span className="text-red-500">qadriyatlar</span>
+            {t('values')}
           </h2>
         </div>
         <div className="md:mt-[60px] mt-[20px]">

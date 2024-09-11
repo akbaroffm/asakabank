@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
+import { useTranslation } from 'react-i18next';
 
 function BlogSection() {
   const [blogs, setBlogs] = useState([]);
+  const { t, i18n } = useTranslation('common');
+  const { language } = i18n;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +22,7 @@ function BlogSection() {
       }
     };
     fetchBlogsData();
-  }, []);
+  }, [language, t]);
 
   const handleBlogClick = (id) => {
     navigate(`/blogs/${id}`);
@@ -28,10 +31,10 @@ function BlogSection() {
   const createMarkup = (html) => ({ __html: html });
 
   return (
-    <div className="md:pt-[40px] pb-[80px]">
-      <div className="container mx-auto px-4">
+    <div className="md:pt-[40px] pb-[80px] px-4">
+      <div className="container mx-auto ">
         <h3 className="font-[700] md:text-[36px] text-[24px] text-center mb-8">
-          AsakaBankdagi hayot
+          {t('asaka-life')}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.slice(0, 6).map((blog) => (
@@ -54,7 +57,8 @@ function BlogSection() {
               </div>
               <div className="flex justify-between items-center mt-4">
                 <span className="flex items-center text-red-500 font-semibold cursor-pointer">
-                  Batafsil{' '}
+                  {t('more')}
+                  {''}
                   <span className="ml-3">
                     <svg fill="red" height="24" viewBox="0 0 24 24" width="24">
                       <circle cx="12" cy="12" r="12" fill="red"></circle>

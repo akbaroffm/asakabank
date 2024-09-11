@@ -27,7 +27,7 @@ function Vacancies() {
       }
     };
     fetchFaqs();
-  }, []);
+  }, [language, t]);
 
   const toggleSection = (index) => {
     setIsOpen(isOpen === index ? null : index);
@@ -178,11 +178,10 @@ function Vacancies() {
             </div>
             <div className="right flex flex-col pb-[32px] md:px-[20px]">
               <h2 className="text-[28px] max-w-full md:max-w-[600px] md:text-[36px] font-[700] text-center">
-                Eng ko'p beriladigan savollar
+                {t('questions')}
               </h2>
               <p className="text-[#999] text-[18px] font-[500] leading-[140%] text-center my-[20px]">
-                Agar sizda qo'shimcha savollar bo'lsa, har doim bizning 1152
-                Call-markazimizga murojaat qilishingiz mumkin
+                {t('question-title')}
               </p>
               <div className="flex justify-center max-w-[100%]">
                 <img src={FAQ} alt="faq" />

@@ -2,21 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import api from '../../services/api';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 const Modal = ({ isVisible, onClose }) => {
   const modalRef = useRef(null);
+  const nameInputRef = useRef(null);
+  const { t, i18n } = useTranslation('modal');
+  const { language } = i18n;
 
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     middleName: '',
-    phone: '',
+    phone: '+998',
     email: '',
     cv: null,
     agreement: false,
     vacancy: null,
   });
   const [submitting, setSubmitting] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -26,27 +31,58 @@ const Modal = ({ isVisible, onClose }) => {
     };
 
     if (isVisible) {
-      document.body.classList.add('no-scroll');
+      document.body.style.overflow = 'hidden';
       document.addEventListener('mousedown', handleClickOutside);
+
+      if (nameInputRef.current) {
+        nameInputRef.current.focus();
+      }
     } else {
-      document.body.classList.remove('no-scroll');
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.body.classList.remove('no-scroll');
+      document.body.style.overflow = '';
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isVisible, onClose]);
+  }, [isVisible, onClose, language, t]);
 
   if (!isVisible) return null;
 
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\+998\d{9}$/;
+    if (!phoneRegex.test(phone)) {
+      setPhoneError("Telefon raqam noto'g'ri kiritilgan.");
+      return false;
+    } else {
+      setPhoneError('');
+      return true;
+    }
+  };
+
   const handleChange = (event) => {
     const { name, value, type, checked, files } = event.target;
-    setFormData({
-      ...formData,
-      [name]:
-        type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
-    });
+
+    if (name === 'phone') {
+      let phoneValue = value.replace(/[^\d+]/g, '');
+      if (!phoneValue.startsWith('+998')) {
+        phoneValue = '+998';
+      }
+      if (phoneValue.length > 13) {
+        phoneValue = phoneValue.slice(0, 13);
+      }
+      setFormData({
+        ...formData,
+        [name]: phoneValue,
+      });
+      validatePhone(phoneValue);
+    } else {
+      setFormData({
+        ...formData,
+        [name]:
+          type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
+      });
+    }
   };
 
   const handleFileSelect = () => {
@@ -55,12 +91,19 @@ const Modal = ({ isVisible, onClose }) => {
 
   const handleModalSubmit = async (event) => {
     event.preventDefault();
+
+    if (!validatePhone(formData.phone)) {
+      toast.error("Iltimos, telefon raqamni to'g'ri kiriting.");
+      return;
+    }
+
     if (!formData.agreement) {
       toast.error(
         "Iltimos, shaxsiy ma'lumotlarni qayta ishlashga rozilik bildiring."
       );
       return;
     }
+
     setSubmitting(true);
 
     try {
@@ -98,14 +141,14 @@ const Modal = ({ isVisible, onClose }) => {
         firstName: '',
         lastName: '',
         middleName: '',
-        phone: '',
+        phone: '+998',
         email: '',
         cv: null,
         agreement: false,
         vacancy: null,
       });
     } catch (error) {
-      toast.error('Ariza yuborishda xato yuz berdi.');
+      toast.error('Ariza yuborishda xato yuz berdi. CV yuklang');
       console.error('Submission failed:', error);
     } finally {
       setSubmitting(false);
@@ -119,7 +162,7 @@ const Modal = ({ isVisible, onClose }) => {
         className="bg-white py-[30px] px-[24px] rounded-[24px] w-full h-[850px] md:h-auto max-w-[780px]"
       >
         <div className="flex justify-between items-start mb-[20px]">
-          <h2 className="text-[22px] font-[700]">Ariza berish</h2>
+          <h2 className="text-[22px] font-[700]">{t('success')}</h2>
           <button className="bg-gray-200 rounded-[50%] p-2" onClick={onClose}>
             <ClearIcon />
           </button>
@@ -132,12 +175,13 @@ const Modal = ({ isVisible, onClose }) => {
                 key={field}
               >
                 <label className="block text-[15px] font-[500] text-[#A3A3A3]">
-                  {field === 'firstName' && 'Ism *'}
-                  {field === 'lastName' && 'Familiya *'}
-                  {field === 'middleName' && 'Otasining ismi *'}
-                  {field === 'phone' && 'Telefon raqam *'}
+                  {field === 'firstName' && t('name') + ' *'}
+                  {field === 'lastName' && t('surname') + ' *'}
+                  {field === 'middleName' && t('middlename') + ' *'}
+                  {field === 'phone' && t('phone') + ' *'}
                   {field === 'email' && 'Email *'}
                 </label>
+
                 <input
                   autoComplete="off"
                   type={
@@ -150,9 +194,15 @@ const Modal = ({ isVisible, onClose }) => {
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
-                  className="font-[500] text-[17px] mt-1 block w-full border rounded-[12px] px-3 py-3 outline-none bg-[#FAFAFA] focus:border-red-500"
+                  className={`font-[500] text-[17px] mt-1 block w-full border rounded-[12px] px-3 py-3 outline-none bg-[#FAFAFA] focus:border-red-500 ${
+                    field === 'phone' && phoneError ? 'border-red-500' : ''
+                  }`}
                   required
+                  ref={field === 'firstName' ? nameInputRef : null}
                 />
+                {field === 'phone' && phoneError && (
+                  <span className="text-red-500 text-[14px]">{phoneError}</span>
+                )}
               </div>
             )
           )}
@@ -162,7 +212,7 @@ const Modal = ({ isVisible, onClose }) => {
               onClick={handleFileSelect}
               className="font-[500] text-[17px] mt-1 block w-full border-dashed border-2 border-black rounded-[12px] px-3 py-3 outline-none bg-[#FAFAFA] text-gray-800"
             >
-              {formData.cv ? formData.cv.name : 'Rezyume / CV yuklang'}
+              {formData.cv ? formData.cv.name : t('resume')}
             </button>
             <input
               id="cv-upload"
@@ -170,7 +220,6 @@ const Modal = ({ isVisible, onClose }) => {
               name="cv"
               onChange={handleChange}
               className="hidden"
-              required
             />
           </div>
           <div className="flex flex-col w-full pt-[24px]">
@@ -189,13 +238,11 @@ const Modal = ({ isVisible, onClose }) => {
                     formData.agreement ? 'checked' : ''
                   }`}
                 />
-                <span className="ml-2">
-                  Men shaxsiy ma'lumotlarni qayta ishlashga roziman
-                </span>
+                <span className="ml-2">{t('agree')}</span>
               </div>
             </label>
           </div>
-          <div className="flex justify-end w-full pt-[24px]">
+          <div className="flex justify-center md:justify-end w-full pt-[24px]">
             <button
               type="submit"
               className={`bg-red-500 rounded-[12px] text-white font-[500] text-[17px] px-[36px] py-[14px] ${
@@ -205,7 +252,7 @@ const Modal = ({ isVisible, onClose }) => {
               }`}
               disabled={submitting || !formData.agreement}
             >
-              {submitting ? 'Yuborilyapti...' : 'Ariza berish'}
+              {submitting ? t('wait') : t('success')}
             </button>
           </div>
         </form>

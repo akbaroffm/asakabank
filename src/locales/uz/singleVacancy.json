@@ -6,5 +6,13 @@
   "tasks": "Vazifalar",
   "demand": "Talablar",
   "conditions": "Sharotilar",
-  "similar-vacancy": "O'xshash vakansiyalar"
+  "similar-vacancy": "O'xshash vakansiyalar",
+  "name": "Ism",
+  "surname": "Familiya",
+  "middlename": "Otasining ismi",
+  "phone": "Telefon raqam",
+  "resume": "Resume / CV yuklang",
+  "agree": "Men shaxsiy ma'lumotlarni qayta ishlashga roziman",
+  "success": "Ariza berish",
+  "wait": "Yuborilyapti"
 }

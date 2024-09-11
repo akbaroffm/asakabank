@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './Blogs.css';
+import { useTranslation } from 'react-i18next';
 
 function Blog() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const { t, i18n } = useTranslation('common');
+  const { language } = i18n;
 
   useEffect(() => {
     const fetchBlogsData = async () => {
@@ -23,7 +27,7 @@ function Blog() {
       }
     };
     fetchBlogsData();
-  }, []);
+  }, [language, t]);
 
   const handleBlogClick = (id) => {
     navigate(`/blogs/${id}`);
@@ -32,18 +36,17 @@ function Blog() {
   const createMarkup = (html) => ({ __html: html });
 
   return (
-    <div>
+    <div className="px-4">
       <div className="container mx-auto">
         <div className="px-3 rounded-[20px] blog-bg">
           <div className="container mx-auto px-4">
             <div className="">
               <div className="flex flex-col text-center md:text-start md:h-[550px] md:items-start justify-center md:max-w-[470px]">
                 <h2 className="font-[700] text-[28px] md:text-[36px] leading-[160%] mb-[32px] md:mt-[-100px]">
-                  Xodimlarning Asakabankdagi hayoti
+                  {t('blog-title')}
                 </h2>
                 <p className="text-[15px] md:text-[20px] font-[500] leading-[160%]">
-                  Biz xodimlarimizni turli sohalarda rivojlanishida
-                  ko'maklashamiz va ularni doimo qo'llab-quvvatlaymiz
+                  {t('blog-discription')}
                 </p>
               </div>
             </div>
@@ -51,7 +54,7 @@ function Blog() {
         </div>
         <div className="py-[80px]">
           <h3 className="font-[700] md:text-[36px] text-[24px] text-center mb-8">
-            Xodimlarning AsakaBankdagi hayot
+            {t('asaka-life')}
           </h3>
           {loading ? (
             <div className="text-center py-4">
@@ -140,7 +143,7 @@ function Blog() {
                   </div>
                   <div className="flex justify-between items-center mt-4">
                     <span className="flex items-center text-red-500 font-semibold cursor-pointer">
-                      Batafsil{' '}
+                      {t('more')}{' '}
                       <span className="ml-3">
                         <svg
                           fill="red"

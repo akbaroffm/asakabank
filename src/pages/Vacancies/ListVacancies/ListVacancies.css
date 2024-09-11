@@ -1,0 +1,8 @@
+.truncate-card {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limits text to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; /* Allow wrapping */
+}

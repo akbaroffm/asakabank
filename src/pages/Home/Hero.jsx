@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import animation from '../../assets/images/animationHero.mp4';
 import Modal from '../../components/Modal/Modal';
+import { useTranslation } from 'react-i18next';
 
 function Hero() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const { t, i18n } = useTranslation('hero');
+  const { language } = i18n;
 
   const handleModalOpen = () => {
     setIsModalVisible(true);
@@ -22,8 +26,8 @@ function Hero() {
   // }, [isModalVisible]);
 
   return (
-    <div>
-      <div className="relative md:h-screen overflow-hidden md:py-[50px]">
+    <div className="">
+      <div className="relative md:h-screen overflow-hidden md:py-[50px] md:px-4">
         <div className="md:absolute inset-0 w-full md:h-full object-cover">
           <video
             className="w-full h-full object-cover"
@@ -37,13 +41,13 @@ function Hero() {
         <div className="container mx-auto">
           <div className="relative z-10 flex flex-col items-center md:items-start justify-start md:h-full text-center">
             <h1 className="text-[20px] md:text-[25px] font-bold mb-4 animate-fade-in mt-4 md:mt-0">
-              To'gri tanlov - muvaffaqiyatli natija
+              {t('selection')}
             </h1>
             <button
               onClick={handleModalOpen}
               className="md:mt-[32px] px-[25px] py-2 md:px-[35px] md:py-3 bg-red-500 text-white text-[17px] font-[500] rounded-lg hover:bg-red-600 transition-colors"
             >
-              Jamoa a'zosi bo'lish
+              {t('subscribe')}
             </button>
           </div>
         </div>

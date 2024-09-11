@@ -5,10 +5,13 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import { Autoplay } from 'swiper/modules';
 import LightLogo from '../../assets/images/logo-light.png';
+import { useTranslation } from 'react-i18next';
 
 function FeedbackSection() {
   const [feedback, setFeedback] = useState([]);
   const [expandedFeedbackId, setExpandedFeedbackId] = useState(null);
+  const { t, i18n } = useTranslation('common');
+  const { language } = i18n;
 
   useEffect(() => {
     const fetchFeedbackData = async () => {
@@ -23,7 +26,7 @@ function FeedbackSection() {
     };
 
     fetchFeedbackData();
-  }, []);
+  }, [language, t]);
 
   const truncateText = (text, wordCount) => {
     const words = text.split(' ');
@@ -42,7 +45,7 @@ function FeedbackSection() {
   return (
     <div className="py-10 bg-[#F8F8F8] px-4">
       <h3 className="font-[700] md:text-[36px] text-[24px] max-w-[600px] mx-auto text-center">
-        Asakabank haqida xodimlarimiz fikri
+        {t('feedback-title')}
       </h3>
       <div className="pt-[40px]">
         <Swiper
@@ -111,14 +114,14 @@ function FeedbackSection() {
                     onClick={handleClose}
                     className="text-red-500 font-[500] hover:underline"
                   >
-                    Yopish
+                    {t('close')}
                   </button>
                 ) : (
                   <button
                     onClick={() => handleReadMore(item.id)}
                     className="text-red-500 font-[500] hover:underline"
                   >
-                    Ochish
+                    {t('open')}
                   </button>
                 )}
               </div>

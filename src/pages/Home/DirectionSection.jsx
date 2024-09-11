@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import Others from '../../assets/images/other-directions.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import { Autoplay } from 'swiper/modules';
+import { useTranslation } from 'react-i18next';
 
 function DirectionSection() {
   const [categories, setCategories] = useState([]);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const { t, i18n } = useTranslation('direction');
+  const { language } = i18n;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategoriesData = async () => {
@@ -24,7 +27,7 @@ function DirectionSection() {
     };
 
     fetchCategoriesData();
-  }, []);
+  }, [language, t]);
 
   const handleCategoryClick = (category) => {
     if (category.is_recommended) {
@@ -36,12 +39,10 @@ function DirectionSection() {
     <div className="mb-[80px] px-4">
       <div className="max-w-[750px] mx-auto">
         <h3 className="font-[700] md:text-[36px] text-[24px] text-center">
-          Biz o'zimiz va jamoada rivojlanamiz
+          {t('development')}
         </h3>
         <p className="mt-[16px] mb-[48px] md:text-[18px] text-[16px] font-[500] text-center leading-[160%]">
-          Biz yuqori natijalarga erishish uchun qulay muhit, shaxsiy rivojlanish
-          imkoniyatlari va kuchli jamoa kerakligini tushunamiz. Yo'nalishni
-          o'zing tanla
+          {t('direction-title')}
         </p>
       </div>
       <Swiper
@@ -81,7 +82,7 @@ function DirectionSection() {
         ))}
         <SwiperSlide className=" flex flex-col items-center space-y-10 pt-[15px] px-[10px] w-[380px] h-[450px] direction-slider rounded-[20px] bg-[#efefef]">
           <h4 className="text-[18px] font-[500] leading-[160%] text-center">
-            Va boshqa yo'nalishlar
+            {t('another')}
           </h4>
           <img
             src={Others}

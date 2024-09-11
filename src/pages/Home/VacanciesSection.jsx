@@ -7,9 +7,12 @@ import 'swiper/css/autoplay';
 import './Vacancies.css';
 import { EffectCoverflow, Autoplay, Mousewheel } from 'swiper/modules';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function VacanciesSection() {
   const [vacancies, setVacancies] = useState([]);
+  const { t, i18n } = useTranslation('vacancies');
+  const { language } = i18n;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,21 +27,21 @@ function VacanciesSection() {
       }
     };
     fetchVacanciesData();
-  }, []);
+  }, [language, t]);
 
   const handleVacancyClick = (slug) => {
     navigate(`/vacancies/${slug}`);
   };
 
   return (
-    <div className="bg-[#333232] py-[80px] mb-[60px] ">
+    <div className="bg-[#333232] py-[80px] mb-[60px]">
       <div className="container mx-auto">
         <div className="max-w-[750px] mx-auto">
           <h2 className="text-center text-[32px] text-white font-[700]">
-            Vakansiyalar
+            {t('vacancies')}
           </h2>
           <p className="text-[#888888] font-[500] text-[18px] leading-[160%] mt-[16px] mb-[48px] text-center">
-            Asakabankdagi bo'sh ish o'rinlari
+            {t('vacancies-title')}
           </p>
         </div>
         <Swiper

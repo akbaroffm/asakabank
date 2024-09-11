@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTranslation } from 'react-i18next';
+import './ListVacancies.css';
 
 const ListVacancies = ({
   onSearch,
@@ -12,8 +13,9 @@ const ListVacancies = ({
   vacancies,
   onFilter,
 }) => {
-  const { t, i18n } = useTranslation('listvacancies');
+  const { t } = useTranslation('listvacancies');
   const navigate = useNavigate();
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
@@ -34,14 +36,15 @@ const ListVacancies = ({
     });
     navigate(`/vacancies/${slug}`);
   };
+
   return (
-    <div className="max-w-[800px] mx-auto bg-white border border-gray-300 rounded-[20px] p-4 sm:p-6">
+    <div className="max-w-[800px] mx-auto bg-transparent md:bg-white md:border md:border-gray-300 rounded-[20px] md:p-4 ">
       <div className="flex flex-col sm:flex-row md:space-x-3 mb-4">
         <div className="relative w-full mb-3 sm:mb-0">
           <input
             type="text"
             placeholder={t('search-placeholder')}
-            className="w-full p-3 border border-gray-300 rounded-[12px] bg-gray-100 outline-none pl-10"
+            className="w-full p-3 border md:border-gray-300 rounded-[12px] bg-gray-100 outline-none pl-10"
             value={filter?.search}
             onChange={(e) =>
               setFilter({
@@ -59,6 +62,7 @@ const ListVacancies = ({
           {t('search-button')}
         </button>
       </div>
+
       {loading ? (
         <div className="text-center p-4">
           <CircularProgress />
@@ -78,7 +82,7 @@ const ListVacancies = ({
                   <span>{result.branch.city_name}</span>
                   <span>{formatDate(result.created_date)}</span>
                 </div>
-                <p className="text-[#444] text-[17px] font-[500] my-5 leading-[150%]">
+                <p className="text-[#444] text-[17px] font-[500] my-5 leading-[150%] truncate-card">
                   {truncateDescription(result.description)}
                 </p>
                 <div className="flex flex-wrap gap-2">

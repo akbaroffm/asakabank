@@ -18,9 +18,13 @@ import Invt from '../../assets/images/invistit.png';
 import Top from '../../assets/images/top.png';
 import Year from '../../assets/images/year.png';
 import Borrower from '../../assets/images/borrower.png';
+import { useTranslation } from 'react-i18next';
 
 function AboutBank() {
   const countRefs = useRef([]);
+
+  const { t, i18n } = useTranslation('common');
+  const { language } = i18n;
 
   useEffect(() => {
     const countUps = countRefs.current.map((ref, index) => {
@@ -46,18 +50,17 @@ function AboutBank() {
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [language, t]);
   return (
     <div className="px-4 ">
       <div className="container mx-auto">
         <div className="about-bg">
           <div className="content flex flex-col items-center md:items-start justify-center md:max-w-[470px] md:h-[550px] text-center md:text-start px-4">
             <h2 className="text-[24px] md:text-[36px] font-[700] leading-[133%] md:mt-[-100px]">
-              Asakabank Taraqqiyot drayveri
+              {t('about-title')}
             </h2>
             <p className="text-[16px] md:text-[20px] font-[500] leading-[150%] my-[24px]">
-              Bankimiz 29 yildan buyon moliyaviy xizmatlar bozorida o'zining
-              yetakchi mavqeini saqlab kelmoqda
+              {t('about-discription')}
             </p>
           </div>
         </div>
@@ -116,30 +119,26 @@ function AboutBank() {
               <h4 className="text-[28px] md:text-[36px] font-[700] mb-[20px] text-red-500">
                 07/11/1995
               </h4>
-              <h5 className="md:text-[17px] font-[500]">
-                Bank tashkil topgan sana
-              </h5>
+              <h5 className="md:text-[17px] font-[500]">{t('about-year')}</h5>
             </div>
             <div className="w-full md:w-1/2 md:px-[20px] mb-[20px] md:mb-[32px]">
               <h4 className="text-[28px] md:text-[36px] font-[700] mb-[20px] text-red-500">
                 21
               </h4>
-              <h5 className="md:text-[17px] font-[500]">
-                Respublika bo'ylab filiallar soni
-              </h5>
+              <h5 className="md:text-[17px] font-[500]">{t('about-branch')}</h5>
             </div>
             <div className="w-full md:w-1/2 md:px-[20px] mb-[20px] md:mb-[32px]">
               <h4 className="text-[28px] md:text-[36px] font-[700] mb-[20px] text-red-500">
                 TOP-4
               </h4>
-              <h5 className="md:text-[17px] font-[500]">Banklar orasida</h5>
+              <h5 className="md:text-[17px] font-[500]">{t('about-top')}</h5>
             </div>
             <div className="w-full md:w-1/2 md:px-[20px] mb-[20px] md:mb-[32px]">
               <h4 className="text-[28px] md:text-[36px] font-[700] mb-[20px] text-red-500">
                 14
               </h4>
               <h5 className="md:text-[17px] font-[500]">
-                Bank xizmatlari markazi
+                {t('about-service')}
               </h5>
             </div>
           </div>
@@ -176,7 +175,7 @@ function AboutBank() {
               2000+
             </h4>
             <h5 className="text-[17px] font-[500] mt-[12px] leading-[150%]">
-              Bank xodimlari
+              {t('about-workers')}
             </h5>
           </div>
           <div className="info">
@@ -201,7 +200,7 @@ function AboutBank() {
             </svg>
             <h4 className="text-[32px] font-[700] mt-[24px]">25%+</h4>
             <h5 className="text-[17px] font-[500] mt-[12px] leading-[150%]">
-              Yoshlar
+              {t('about-adault')}
             </h5>
           </div>
           <div className="info">
@@ -236,7 +235,7 @@ function AboutBank() {
               1500+
             </h4>
             <h5 className="text-[17px] font-[500] mt-[12px] leading-[150%]">
-              Oliy ma'lumotli xodimlar
+              {t('about-high')}
             </h5>
           </div>
           <div className="info">
@@ -266,18 +265,17 @@ function AboutBank() {
               1100+
             </h4>
             <h5 className="text-[17px] font-[500] mt-[12px] leading-[150%]">
-              Bank mutaxassislari
+              {t('about-proffesionals')}
             </h5>
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:justify-between pb-[60px] px-4">
           <div className="left w-full md:max-w-[400px] mb-6 md:mb-0">
             <h2 className="text-[28px] md:text-[36px] font-[700] leading-[150%]">
-              Yutuqlar va mukofotlar
+              {t('about-slide-title')}
             </h2>
             <h3 className="text-[15px] md:text-[20px] font-[500] leading-[160%] mt-[24px]">
-              Bir necha bor O‘zbekistonda yilning "Eng yaxshi banki" deb tan
-              olingan hamda Raqamlashtirish bo'yicha birinchilardan hisoblanadi
+              {t('about-slide-discription')}
             </h3>
           </div>
           <div className="about-right w-full md:w-2/3">
@@ -295,7 +293,10 @@ function AboutBank() {
                   slidesPerView: 2,
                 },
                 1024: {
-                  slidesPerView: 3,
+                  slidesPerView: 2,
+                },
+                1260: {
+                  slidesPerView: 2,
                 },
                 1280: {
                   slidesPerView: 3,
@@ -306,11 +307,10 @@ function AboutBank() {
                 <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
                   <img src={Award} alt="award" />
                   <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
-                    Eng yaxshi stend dizayni
+                    {t('about-slider-title')}
                   </h4>
                   <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
-                    BankExpo-2015 ko’rgazmasida Asaka banki "Eng yaxshi stend
-                    dizayni" nominatsiyasida g'olib deb topildi
+                    {t('about-slider-discription')}
                   </h5>
                 </div>
               </SwiperSlide>
@@ -318,12 +318,10 @@ function AboutBank() {
                 <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
                   <img src={MDH} alt="award" />
                   <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
-                    MDH, Boltiqbo'yi davlatlari, Gruziyaning yil banki - 2010
+                    {t('about-slider-title2')}
                   </h4>
                   <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
-                    Asakabank «Банкиръ» (Ukraina) nashriyoti tomonidan tashkil
-                    etilgan xalqaro tanlovda ishtirok etib, «MDH, Baltiya va
-                    Gruziyada eng ochiq va shafof bank» deb topildi
+                    {t('about-slider-discription2')}
                   </h5>
                 </div>
               </SwiperSlide>
@@ -331,11 +329,10 @@ function AboutBank() {
                 <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
                   <img src={Invt} alt="award" />
                   <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
-                    O‘zbekistondagi eng yaxshi investitsiya banki - 2020
+                    {t('about-slider-title3')}
                   </h4>
                   <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
-                    Asakabank – Global banking &amp; finance reytingi bo‘yicha
-                    2020-yildagi O‘zbekistonning eng yaxshi investitsiya banki
+                    {t('about-slider-discription3')}
                   </h5>
                 </div>
               </SwiperSlide>
@@ -343,10 +340,10 @@ function AboutBank() {
                 <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
                   <img src={Top} alt="award" />
                   <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
-                    Eng yaxshi bank
+                    {t('about-slider-title4')}
                   </h4>
                   <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
-                    Asakabank - Asiamoney KO'B yo‘nalishidagi eng yaxshi bank
+                    {t('about-slider-discription4')}
                   </h5>
                 </div>
               </SwiperSlide>
@@ -354,10 +351,10 @@ function AboutBank() {
                 <div className="bg-white aboutBank-slider rounded-[12px] flex flex-col items-center border border-[#dadada] md:border-none">
                   <img src={Year} alt="award" />
                   <h4 className="text-[16px] font-[700] leading-[160%] mt-[12px] mx-[20px]">
-                    2019 - Yil brendi
+                    {t('about-slider-title5')}
                   </h4>
                   <h5 className="text-[13px] font-[500] leading-[150%] mt-[12px] mx-[20px]">
-                    Brend-2019 Marketing yetakchisi
+                    {t('about-slider-discription')}
                   </h5>
                 </div>
               </SwiperSlide>
