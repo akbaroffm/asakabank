@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../services/api';
 import { useTranslation } from 'react-i18next';
-
+import Video from '../../components/Video';
 function BlogDetail() {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
@@ -23,19 +23,10 @@ function BlogDetail() {
   }, [id, language, t]);
 
   const renderVideo = () => {
-    if (blog?.link && blog.link.includes('youtube.com')) {
-      const videoId = blog.link.split('v=')[1];
-      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    if (blog?.link) {
       return (
         <div className="mt-8">
-          <iframe
-            width="100%"
-            src={embedUrl}
-            title="YouTube video"
-            className="rounded-[16px]"
-            frameBorder="0"
-            allowFullScreen
-          />
+          <Video source={blog?.link} />
         </div>
       );
     }
