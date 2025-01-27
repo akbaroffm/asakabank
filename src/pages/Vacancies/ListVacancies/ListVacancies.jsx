@@ -78,8 +78,8 @@ const ListVacancies = ({
               >
                 <h2 className="font-medium text-lg">{result.title}</h2>
                 <div className="flex flex-wrap space-x-2 text-[15px] text-customGray my-1 leading-[150%]">
-                  <span>{result.job_type}</span>
-                  <span>{result.branch.city_name}</span>
+                  <span>{result.job_type}</span> <b>●</b>
+                  <span>{result.branch.city_name}</span> <b>●</b>
                   <span>{formatDate(result.created_date)}</span>
                 </div>
                 <p className="text-[#444] text-[17px] font-[500] my-5 leading-[150%] truncate-card">

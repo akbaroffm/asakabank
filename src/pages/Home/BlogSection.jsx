@@ -40,9 +40,14 @@ function BlogSection() {
           {blogs.slice(0, 6).map((blog) => (
             <div
               key={blog.id}
-              className="bg-white rounded-[20px] p-[18px] overflow-hidden flex flex-col justify-between h-full shadow-custom-light cursor-pointer"
+              className="bg-white rounded-[20px] p-[18px] overflow-hidden flex flex-col justify-between h-full shadow-custom-light cursor-pointer relative"
               onClick={() => handleBlogClick(blog.id)}
             >
+              {blog.link && (
+                <span className="absolute top-8 right-8 bg-white text-[14px] px-3 py-1 rounded-[20px] font-[500]">
+                  {t('video')}
+                </span>
+              )}
               <img
                 src={blog.image.url}
                 alt={blog.image.name}

@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from 'react-i18next';
 import api from '../../../services/api';
+import axios from 'axios';
 
 const SingleVacancy = () => {
   const nameInputRef = useRef(null);
@@ -19,6 +20,7 @@ const SingleVacancy = () => {
   const [similarVacancies, setSimilarVacancies] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -29,6 +31,8 @@ const SingleVacancy = () => {
     agreement: false,
     vacancy: null,
   });
+  console.log(formData);
+  console.log(vacancy);
 
   const modalRef = useRef(null);
 
@@ -76,6 +80,16 @@ const SingleVacancy = () => {
 
     fetchVacancy();
   }, [slug, language]);
+
+  useEffect(() => {
+    if (vacancy) {
+      const { id, slug, title } = vacancy;
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        vacancy: vacancy.id,
+      }));
+    }
+  }, [vacancy]);
 
   const handleModalOpen = () => {
     setIsModalVisible(true);
@@ -133,29 +147,41 @@ const SingleVacancy = () => {
     }
   };
 
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2NzUwODMxLCJpYXQiOjE3MjY3MjIwMzEsImp0aSI6IjFiMWM3NmE0MmZhNDQ4MTM4ODIzMmIxNjViYjI2NWExIiwidXNlcl9pZCI6MX0.UlpmA55RwpOWgOmuU-PgAYxwY9x4dZhnHKBv8ieWdY8';
+
   const handleModalSubmit = async (event) => {
     event.preventDefault();
+
     if (!validatePhone(formData.phone)) {
       toast.error("Iltimos, telefon raqamni to'g'ri kiriting.");
       return;
     }
+
     if (!formData.agreement) {
       alert(
         "Iltimos, shaxsiy ma'lumotlarni qayta ishlashga rozilik bildiring."
       );
       return;
     }
+
     setSubmitting(true);
 
     try {
       const cvFormData = new FormData();
       cvFormData.append('file', formData.cv);
 
-      const cvResponse = await api({
-        url: '/upload/',
-        method: 'POST',
-        data: cvFormData,
-      });
+      // Upload CV
+      const cvResponse = await axios.post(
+        'http://127.0.0.1:8000/upload/',
+        cvFormData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const cvId = cvResponse.data.id;
 
@@ -167,13 +193,14 @@ const SingleVacancy = () => {
         email: formData.email,
         cv: cvId,
         agreement: formData.agreement,
-        vacancy: vacancy.id,
+        vacancy: formData.vacancy,
       };
 
-      await api({
-        url: '/apply/job/',
-        method: 'POST',
-        data: applicationData,
+      // Submit application
+      await axios.post('http://127.0.0.1:8000/apply/job/', applicationData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       toast.success('Ariza muvaffaqiyatli yuborildi!');
@@ -195,7 +222,6 @@ const SingleVacancy = () => {
       setSubmitting(false);
     }
   };
-
   const handleVacancyClick = (vacancySlug) => {
     window.scrollTo({
       top: 0,
@@ -268,7 +294,7 @@ const SingleVacancy = () => {
                 <h2 className="font-[700] text-[22px] md:text-[24px] leading-[150%]">
                   {vacancy.title}
                 </h2>
-                <div className="flex flex-wrap gap-2 my-[18px]">
+                <div className="flex flex-wrap gap-2 mt-[10px]">
                   {vacancy.tags.map((tag) => (
                     <span
                       key={tag.id}
@@ -472,7 +498,6 @@ const SingleVacancy = () => {
                   name="cv"
                   onChange={handleChange}
                   className="hidden"
-                  required
                 />
               </div>
               <div className="flex flex-col w-full pt-[24px]">
@@ -483,7 +508,6 @@ const SingleVacancy = () => {
                     checked={formData.agreement}
                     onChange={handleChange}
                     className="hidden-checkbox"
-                    required
                   />
                   <div className="custom-checkbox-container">
                     <div

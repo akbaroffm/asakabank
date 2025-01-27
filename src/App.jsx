@@ -9,7 +9,7 @@ import Blog from './pages/Blog/Blog';
 import AboutBank from './pages/AboutBank/AboutBank';
 import Footer from './components/Footer/Footer';
 import SingleVacancy from './pages/Vacancies/SingleVacancies/SingleVacancies';
-import './components/i18n';
+// import './components/i18n';
 import Home from './pages/Home/Home';
 import BlogDetail from './pages/Home/BlogDetail';
 import ScrollToTop from './components/ScrollTop/ScrollTop';

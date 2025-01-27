@@ -54,13 +54,19 @@ const Navbar = ({ onLanguageChange }) => {
                 onClick={() => handleLanguageChange('ru')}
                 className="text-gray-800 focus:outline-none"
               >
-                RU
+                <img
+                  src={RU}
+                  alt="uz"
+                  width={25}
+                  height={25}
+                  className="mr-2"
+                />
               </button>
               <button
                 onClick={() => handleLanguageChange('uz')}
                 className="text-gray-800 focus:outline-none"
               >
-                UZ
+                <img src={UZ} alt="uz" width={25} height={25} />
               </button>
             </div>
             <button
@@ -149,7 +155,7 @@ const Navbar = ({ onLanguageChange }) => {
                   height={25}
                   className="mr-2"
                 />
-                <p className="lg:opacity-100 opacity-0">RU</p>
+                <p className="lg:opacity-100 opacity-0 font-semibold">RU</p>
               </button>
               <button
                 onClick={() => handleLanguageChange('uz')}
@@ -162,7 +168,7 @@ const Navbar = ({ onLanguageChange }) => {
                   height={25}
                   className="mr-2"
                 />
-                <p className="lg:opacity-100 opacity-0">UZ</p>
+                <p className="lg:opacity-100 opacity-0 font-semibold">UZ</p>
               </button>
             </div>
           </div>

@@ -1,6 +1,6 @@
 {
   "all": "Barchasi",
-  "filter": "Filter",
+  "filter": "Filtr",
   "clearFilters": "Filtrlarni tozalash",
   "direction": "Yo'nalish",
   "branch": "Filial",
@@ -10,5 +10,6 @@
   "part_time": "Yarim stavka",
   "contract": "Shartnoma asosida",
   "temporary": "Vaqtinchalik",
-  "internship": "Stajirovka"
+  "internship": "Stajirovka",
+  "apply": "Filtr"
 }

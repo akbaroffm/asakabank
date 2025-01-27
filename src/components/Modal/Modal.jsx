@@ -3,6 +3,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import api from '../../services/api';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 const Modal = ({ isVisible, onClose }) => {
   const modalRef = useRef(null);
@@ -89,6 +90,9 @@ const Modal = ({ isVisible, onClose }) => {
     document.getElementById('cv-upload').click();
   };
 
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2NjYwNDAwLCJpYXQiOjE3MjY2MzE2MDAsImp0aSI6IjE5ODIwMGY2M2Q4NjRkYmZhMmI5NmQ2ZDFjZDE0MDg4IiwidXNlcl9pZCI6MX0.uttCTsM4ZhEXvHcpCjSI8aElGAyfxvm01BfYerVJPdo';
+
   const handleModalSubmit = async (event) => {
     event.preventDefault();
 
@@ -110,14 +114,21 @@ const Modal = ({ isVisible, onClose }) => {
       const cvFormData = new FormData();
       cvFormData.append('file', formData.cv);
 
-      const cvResponse = await api({
-        url: '/upload/',
-        method: 'POST',
-        data: cvFormData,
-      });
+      // Upload CV
+      const cvResponse = await axios.post(
+        'http://127.0.0.1:8000/upload/',
+        cvFormData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const cvId = cvResponse.data.id;
 
+      // Submit application
       const applicationData = {
         first_name: formData.firstName,
         last_name: formData.lastName,
@@ -129,10 +140,10 @@ const Modal = ({ isVisible, onClose }) => {
         vacancy: formData.vacancy,
       };
 
-      await api({
-        url: '/apply/job/',
-        method: 'POST',
-        data: applicationData,
+      await axios.post('http://127.0.0.1:8000/apply/job/', applicationData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       toast.success('Ariza muvaffaqiyatli yuborildi!');

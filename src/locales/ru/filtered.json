@@ -10,5 +10,6 @@
   "part_time": "Неполная ставка",
   "contract": "По контракту",
   "temporary": "Временная",
-  "internship": "Стажировка"
+  "internship": "Стажировка",
+  "apply": "Фильтр"
 }
